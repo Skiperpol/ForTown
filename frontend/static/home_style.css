@@ -1,0 +1,75 @@
+/* 
+
+nie czytałem tego co tu jest wiec większosć klas jest pewnie 
+do wyrzucenia
+
+ */
+
+body { 
+	margin: 0;
+	padding: 0; 
+}
+
+#map { 
+	width: auto;
+	height: 100vh;
+}
+
+#lewe_menu {
+	height: 100vh;
+	width: 30px;
+	float: left;
+	position: static;
+	background-color: #dcd3b6;
+}
+
+
+
+
+.marker {
+	background-size: cover;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	cursor: pointer;	
+}
+.kategoria1 {
+	/* background-image: url('mapbox-icon.png'); */
+	background-color: rgb(255, 0, 38);
+}
+
+.kategoria2 {
+	/* background-image: url('mapbox-icon.png'); */
+	background-color: rgb(0, 255, 0);
+}
+
+.kategoria3 {
+	background-color: black;
+	/* background-image: url('mapbox-icon.png'); */
+}
+.mapboxgl-ctrl-logo {
+    /*display: none !important;*/
+    /*usuwanie loga jest jednak nielegalne bez wykupionej licencji*/
+}
+.mapboxgl-popup {
+	max-width: 200px;
+	max-height: 200px;
+}
+.mapboxgl-popup-content {
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.sidenav {
+    background-color: #fff;
+    width: 26vw;
+    height: 96vh;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    padding: 2vh 2vw 2vh 2vw;
+}
+
+#sidenav_right {
+    right: 0;
+}

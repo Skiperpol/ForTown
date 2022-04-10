@@ -1,0 +1,50 @@
+<!-- w base bedą elementu wspólne na stronie -->
+{% extends "base.html" %}
+
+<!-- block linki do wklejania skryptów i linków -->
+{% block linki %}
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+{% endblock %}
+
+<!-- tutaj css, dla każdej podstrony dodajmy inny plik css żeby było czytelniej -->
+{% block css %}home_style.css{% endblock %}
+
+<!-- tytuł -->
+{% block title %}Home title{% endblock %}
+
+<!-- główna zawartość -->
+{% block content %}
+
+<div id="map"></div>
+
+<div id="sidenav_left" class="sidenav"></div>
+
+<div id="sidenav_right" class="sidenav">
+<!-- Formularz do wysyłania wydarzeń do panel admina -->
+    <form method="post" action="/addEvent/">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit", name="save">Create New</button>
+    </form>
+<!-- ----------------------------------------------- -->
+</div>
+
+<!-- nie wiem co to za div -->
+<div id="form"></div> 
+
+<script src="static/map_scripts.js"></script>
+
+<!-- Funkcja tworzącą punkty na mapie z panel admina -->
+<script language="javascript">
+    {% for event_location in event %}
+        var x = {{event_location.x_miejsca}}.toString()
+        var y = {{event_location.y_miejsca}}.toString()
+        dodaj_marker(y, x);
+        console.log("{{event_location.title}}")
+    {% endfor %}
+    
+</script>
+<!-- ---------------------------------------------- -->
+
+{% endblock %}
