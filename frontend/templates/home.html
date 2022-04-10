@@ -1,15 +1,12 @@
 <!-- w base bedą elementu wspólne na stronie -->
 {% extends "base.html" %}
-
 <!-- block linki do wklejania skryptów i linków -->
 {% block linki %}
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
 {% endblock %}
-
 <!-- tutaj css, dla każdej podstrony dodajmy inny plik css żeby było czytelniej -->
 {% block css %}home_style.css{% endblock %}
-
 <!-- tytuł -->
 {% block title %}Home title{% endblock %}
 
@@ -18,22 +15,49 @@
 
 <div id="map"></div>
 
-<div id="sidenav_left" class="sidenav"></div>
+<div id="sidenav_left" class="sidenav">
+    <div id="">
+        <button class="btn" onclick="toggle_right_menu(1)">Tymczasowy wlacznik</button>
+        <button class="btn" onclick="toggle_right_menu(0)">Tymczasowy wyłącznik</button>
+    </div>  
+    <!-- logowanie -->
+    {% if user.is_authenticated %}
+    <div id="login_container">
+        <a class="btn btn-outline-dark" type="button" href="/logout">Wyloguj</a>
+    </div>
+    {% else %}
+    <div id="login_container">
+        <a class="btn btn-outline-dark" type="button" href="/login">Zaloguj</a>
+        <a class="btn btn-outline-dark" type="button" href="{% url 'register' %}">Zarejestruj</a>
+    </div>
+    {% endif %}	
+</div>
 
 <div id="sidenav_right" class="sidenav">
 <!-- Formularz do wysyłania wydarzeń do panel admina -->
+    <h3>Dodaj wydarzenie</h3>
+    {% load crispy_forms_tags %}
     <form method="post" action="/addEvent/">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit", name="save">Create New</button>
+        {{ form|crispy }} 
+        <button class="btn btn-outline-dark" type="submit", name="save">Create New</button>
     </form>
 <!-- ----------------------------------------------- -->
 </div>
 
-<!-- nie wiem co to za div -->
-<div id="form"></div> 
-
 <script src="static/map_scripts.js"></script>
+
+<!-- animacje prawego sidemenu -->
+<script>
+    function toggle_right_menu(activation) {
+        let right_menu = document.getElementById("sidenav_right");
+        if (activation == 1) {
+            right_menu.classList.add("active")
+        } else {
+            right_menu.classList.remove("active")
+        }
+    }
+</script>
 
 <!-- Funkcja tworzącą punkty na mapie z panel admina -->
 <script language="javascript">
