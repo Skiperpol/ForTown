@@ -28,21 +28,158 @@
         <button type="submit", name="save">Create New</button>
     </form>
 <!-- ----------------------------------------------- -->
+<div id="titleDiv"></div>
+<div id="descriptionDiv"></div>
+<div id="authorDiv"></div>
+<div id="start_timeDiv"></div>
+<div id="deadlineDiv"></div>
+<div id="type_of_eventDiv"></div>
 </div>
 
 <!-- nie wiem co to za div -->
 <div id="form"></div> 
 
-<script src="static/map_scripts.js"></script>
+
 
 <!-- Funkcja tworzącą punkty na mapie z panel admina -->
 <script language="javascript">
-    {% for event_location in event %}
-        var x = {{event_location.x_miejsca}}.toString()
-        var y = {{event_location.y_miejsca}}.toString()
-        dodaj_marker(y, x);
-        console.log("{{event_location.title}}")
-    {% endfor %}
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZmlsaXB0ZXN0IiwiYSI6ImNrd3V5NjhzdjFyY3YydXJ0bGl5dmhtNTUifQ.ew77j1B9ZXb20GBYznPLbQ';
+    const bounds = [
+    [17.597991, 51.518052], //  coordinates
+    [18.513122, 52.061509] //  coordinates
+    ];
+
+    const map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [18.0853, 51.7573],// starting position
+    zoom: 13.6, // starting zoom
+    maxZoom: 17,
+    minZoom: 10,
+    maxBounds: bounds // Set the map's geographical boundaries. (granice)
+    });
+
+    // funkcja dodająca markery
+    function dodaj_marker(x,y,titleAnswer,descriptionAnswer,authorAnswer,start_timeAnswer,deadlineAnswer,type_of_eventAnswer) {
+        let nowe_markery = {
+            type: 'FeatureCollection',
+            features: 
+            [{
+                type: 'Feature',
+                geometry: 
+                    {
+                    type: 'Point',
+                    coordinates: [x,y]
+                    },
+                properties: {
+                    title: titleAnswer,
+                    description: descriptionAnswer,
+                    author: authorAnswer,
+                    start_time: start_timeAnswer,
+                    deadline: deadlineAnswer,
+                    type_of_event: type_of_eventAnswer
+                    }
+            }]
+        };
+        // baza_markerow.features.push(nowe_markery);
+        
+        for (const feature of nowe_markery.features) {
+            const el = document.createElement('div');
+            el.className = 'marker';
+            el.classList.add("kategoria1");
+            // sprawdz czy marker jest klikniety
+            el.addEventListener("click", function() {
+                clicked = true;
+                titleDiv.innerHTML = '<p>' + feature.properties.title + '</p>'
+                descriptionDiv.innerHTML = '<p>' + feature.properties.description + '</p>'
+                authorDiv.innerHTML = '<p>' + feature.properties.author + '</p>'
+                start_timeDiv.innerHTML = '<p>' + feature.properties.start_time + '</p>'
+                deadlineDiv.innerHTML = '<p>' + feature.properties.deadline + '</p>'
+                type_of_eventDiv.innerHTML = '<p>' + feature.properties.type_of_event + '</p>'
+            }, false);
+                
+            new mapboxgl.Marker(el).setLngLat(nowe_markery.features[0].geometry.coordinates).addTo(map);
+        }
+    };
+
+
+    "{% for event_location in event %}"
+        var x = "{{event_location.x_miejsca}}".toString()
+        var y = "{{event_location.y_miejsca}}".toString()
+        var title = "{{event_location.title}}".toString()
+        var description = "{{event_location.description}}".toString()
+        var author = "{{event_location.author}}".toString()
+        var start_time = "{{event_location.start_time}}".toString()
+        var deadline = "{{event_location.deadline}}".toString()
+        var type_of_event = "{{event_location.type_of_event}}".toString()
+        dodaj_marker(y, x, title, description, author, start_time, deadline, type_of_event);
+    "{% endfor %}"
+
+
+
+    // function dodaj_input() {
+
+    //   // usuń ewentualne poprzednie formularze
+    //   function deleteElement(elementId){
+    //     var element = document.getElementById(elementId);
+    //     if (typeof(element) != 'undefined' && element != null)
+    //     {
+    //       element.remove();
+    //     }
+    //   }
+
+    //   deleteElement("button");
+    //   deleteElement("select");
+    //   deleteElement("input");
+
+    //   // tworzenie formularzy pod mapą
+    //   var form = document.getElementById('form');
+    //   var input = document.createElement("input");
+    //   input.id = 'input';
+    //   input.class = 'input';
+    //   input.type = 'text';
+    //   input.name = 'name';
+    //   form.appendChild(input);
+    
+    //   var select_kategoria = document.createElement("select");
+    //   select_kategoria.id = "select";
+    //   select_kategoria.class = "select";
+    //   var option1 = document.createElement("option");
+    //   option1.text = "kategoria1";
+    //   var option2 = document.createElement("option");
+    //   option2.text = "kategoria2";
+    //   var option3 = document.createElement("option");
+    //   option3.text = "kategoria3";
+    //   select_kategoria.add(option1);
+    //   select_kategoria.add(option2);
+    //   select_kategoria.add(option3);
+    //   form.appendChild(select_kategoria);
+
+    //   var button = document.createElement("button");
+    //   button.id="button";
+    //   button.class="button";
+    //   button.innerHTML = "button";
+    //   form.appendChild(button);
+
+    //   // funkcja która sprawdza czy przycisk pod submit został klikniety
+    //   button.addEventListener("click", function() {    
+    //     var text = input.value;
+    //     var kategoria = select_kategoria.value;
+        
+    //     // usuń formularz
+    //     deleteElement("button");
+    //     deleteElement("select");
+    //     deleteElement("input");
+
+    //     if(text.length > 0) dodaj_marker(x, y, text, kategoria);
+    //     else alert("brak nazwy");
+    //   });
+    // };
+
+    // // potencjalne problemy:
+    // // - przy większej ilości markerów mapa sie zacina (jesli obnizymy jakość i wielkość obrazków laguje mniej)
+
+
     
 </script>
 <!-- ---------------------------------------------- -->
