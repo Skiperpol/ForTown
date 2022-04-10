@@ -17,7 +17,7 @@
 
 <div id="sidenav_left" class="sidenav">
     <div id="">
-        <button class="btn" onclick="toggle_right_menu(1)">Tymczasowy wlacznik</button>
+        <button class="btn" onclick="toggle_right_menu(1)">Tymczasowy wlacznik (tylko po zalogowaniU)</button>
         <button class="btn" onclick="toggle_right_menu(0)">Tymczasowy wyłącznik</button>
     </div>  
     <!-- logowanie -->
@@ -51,7 +51,8 @@
 <script>
     function toggle_right_menu(activation) {
         let right_menu = document.getElementById("sidenav_right");
-        if (activation == 1) {
+        let logged = "{% if user.is_authenticated %}1{% endif %}";
+        if (activation == 1 && logged == 1) {
             right_menu.classList.add("active")
         } else {
             right_menu.classList.remove("active")
