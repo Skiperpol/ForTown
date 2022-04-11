@@ -17,14 +17,31 @@
 
 <div id="sidenav_left" class="sidenav sidenav_left">
     <!-- logowanie -->
+    <img class="title_img" src="https://www.kalisz.pl/themes/umkalisz/images/logo.png" alt="">
     <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
     <div class="sort">
-        <a href="{% url 'home' %}">Najnowsze</a>
-        <a href="">Najbliżej mnie</a>
-        <a href="">Aktualne</a>
+        <a class="sort_kategorie" href="{% url 'home' %}">Nadchodzące</a>
+        <a class="sort_kategorie" href="{% url 'home' %}">Najbliżej mnie</a>
+        <a class="sort_kategorie" href="{% url 'home' %}">Trwające</a>
+        <a href="">Sportowe<img class="sort_img" src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png" alt=""></a>
+        <a href="">Kulturowe<img class="sort_img" src="https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png" alt=""></a>
+        <a href="">Rozrywkowe<img class="sort_img" src="https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png" alt=""></a>
     </div>
     {% for e in event %}
-    <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>{{ e.start_time }}</span></button>
+    <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>
+        <script>console.log("{{ today}}")</script>
+        <script>console.log("{{ e.start_time}}")</script>
+        {% if today.date >= e.start_time.date and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline.time >= today.time and today.time >= e.start_time.time%}
+            Trwa
+        {% elif today.date == e.start_time.date %}
+            Dzisiaj, {{ e.start_time.time }}
+        {% else %}
+        {{ e.start_time }}
+        {% endif %}
+        
+            
+        
+    </span></button>
     <script>
         document.getElementById('e')
         // sprawdz czy marker jest klikniety
@@ -77,7 +94,6 @@
     <div id="type_of_eventDiv"></div>
     <div id="authorDiv"></div>
 </div>
-
 <!-- animacje prawego sidemenu -->
 <script>
     function toggle_right_menu(activation, id, x=0, y=0) {

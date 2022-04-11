@@ -81,6 +81,18 @@ do wyrzucenia
 	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
 	/* background-image: url('mapbox-icon.png'); */
 }
+
+.sort_img {
+	width: 1vw;
+	height: auto;
+}
+
+.sort_kategorie {
+	flex-basis: 33%;
+	margin-bottom: 1vh;
+	text-align: center;
+}
+
 .mapboxgl-ctrl-logo {
     /*display: none !important;*/
     /*usuwanie loga jest jednak nielegalne bez wykupionej licencji*/
@@ -117,6 +129,12 @@ do wyrzucenia
 .sidenav_right {
     right: -30vw;
 	transition: right .5s ease;
+}
+
+#sidenav_left .title_img {
+	width: 60%;
+	height: auto;
+	margin-bottom: 2vh;
 }
 
 .sidenav_right img {

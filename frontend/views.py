@@ -4,12 +4,19 @@ from main_backend.models import Event
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
+import datetime
+from django.utils import timezone
 # Create your views here.
 
 def home_page(request):
     form = CreateNewEvent()
+    today = timezone.now()
     event = Event.objects.all().order_by("start_time")
-    context = {"form":form, "event":event}
+    for e in event:
+        if e.deadline < today:
+                Event.objects.filter(id=e.id).delete()
+                event = Event.objects.all().order_by("start_time")
+    context = {"form":form, "event":event,'today':today}
     return render(request, 'home.html', context)
     
 def register_request(request):
