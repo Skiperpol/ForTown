@@ -18,8 +18,13 @@
 <div id="sidenav_left" class="sidenav sidenav_left">
     <!-- logowanie -->
     <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
+    <div class="sort">
+        <a href="{% url 'home' %}">Najnowsze</a>
+        <a href="">Najbliżej mnie</a>
+        <a href="">Aktualne</a>
+    </div>
     {% for e in event %}
-    <button id="e" class="left-list-element">{{ e }} <span>{{ e.start_time }}</span></button>
+    <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>{{ e.start_time }}</span></button>
     <script>
         document.getElementById('e')
         // sprawdz czy marker jest klikniety
@@ -64,12 +69,13 @@
 </div>
 
 <div id="sidenav_right_detail" class="sidenav sidenav_right">
+    <img src="https://previews.123rf.com/images/michalludwiczak/michalludwiczak1909/michalludwiczak190900164/130067224-old-town-street-in-city-of-kalisz-in-central-poland.jpg" alt="">
     <div id="titleDiv"></div>
     <div id="descriptionDiv"></div>
-    <div id="authorDiv"></div>
     <div id="start_timeDiv"></div>
     <div id="deadlineDiv"></div>
     <div id="type_of_eventDiv"></div>
+    <div id="authorDiv"></div>
 </div>
 
 <!-- animacje prawego sidemenu -->
@@ -82,10 +88,15 @@
                 speed: 0.2
             });
         }
+        console.log(activation, id)
         let right_menu = document.getElementById(nazwa);
         let logged = "{% if user.is_authenticated %}1{% endif %}";
-        if (activation == 1 && logged == 1) {
-            right_menu.classList.add("active")
+        if (activation == 1) {
+            if (logged == 1) {
+                right_menu.classList.add("active")
+            } else if(id=="detail") {
+                right_menu.classList.add("active")
+            }
         } else {
             right_menu.classList.remove("active")
         }
@@ -143,7 +154,9 @@
         for (const feature of nowe_markery.features) {
             const el = document.createElement('div');
             el.className = 'marker';
-            el.classList.add("kategoria1");
+            let kategorie = {'Sportowe':'kategoria2', 'Kulturowe':'kategoria3', 'Rozrywkowe':'kategoria1'}
+
+            el.classList.add(kategorie[feature.properties.type_of_event]);
             // sprawdz czy marker jest klikniety
             el.addEventListener("click", function() {
                 titleDiv.innerHTML = '<h3>' + feature.properties.title + '</h3>'
@@ -170,8 +183,7 @@
         var type_of_event = "{{event_location.type_of_event}}".toString()
         dodaj_marker(y, x, title, description, author, start_time, deadline, type_of_event);
     "{% endfor %}"
-
-
+    
 // pisze ten koda w połowie śpiąc ale działa on tak że jesli na mapie poza markerem no to zamyka prawy sidebar
     const markery_na_mapie = document.getElementsByClassName("marker");
     const markery_w_liscie = document.getElementsByClassName("left-list-element")
@@ -190,8 +202,13 @@
                 worked += 1
             }
         }  
-        if (sidenav_right_detail.contains(e.target) || sidenav_right_form.contains(e.target) || open_form.contains(e.target)){
+        if (sidenav_right_detail.contains(e.target) || sidenav_right_form.contains(e.target)){
             worked += 1
+        }
+        if (open_form !== null) {
+            if (open_form.contains(e.target)) {
+                worked += 1
+            }
         }
         if (worked == 0) {
             // toggle_right_menu(0, 'form')

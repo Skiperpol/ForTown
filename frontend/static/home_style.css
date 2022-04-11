@@ -10,24 +10,75 @@ do wyrzucenia
 	height: 100vh;
 }
 .marker {
-	background-size: cover;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.asteriskField {
+	color: red;
+}
+.Kulturowe::before {
+	display: inline-block;
+	content: "";
+	width: 30px;
+	height: 30px;
+	background-size: 30px 30px;
+	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
+}
+.Sportowe::before {
+	display: inline-block;
+	content: "";
+	width: 30px;
+	height: 30px;
+	background-size: 30px 30px;
+	background-image: url("https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png");
+}
+.Rozrywkowe::before {
+	display: inline-block;
+	content: "";
+	width: 30px;
+	height: 30px;
+	background-size: 30px 30px;
+	background-image: url("https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png");
+}
+.kategoria1::after {
+	filter: drop-shadow(1px 1px 1px #222);
+	position: absolute;
+	top: 0;
+	left: 25px;
+	content: "";
 	width: 50px;
 	height: 50px;
-	border-radius: 50%;
-	cursor: pointer;	
-}
-.kategoria1 {
+	background-size: 50px 50px;
 	/* background-image: url('mapbox-icon.png'); */
-	background-color: rgb(255, 0, 38);
+	background-image: url("https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png");
 }
 
-.kategoria2 {
+.kategoria2::after {
+	filter: drop-shadow(1px 1px 1px #222);
+	position: absolute;
+	top: 0;
+	left: 25px;
+	content: "";
+	width: 50px;
+	height: 50px;
+	background-size: 50px 50px;
 	/* background-image: url('mapbox-icon.png'); */
-	background-color: rgb(0, 255, 0);
+	background-image: url("https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png");
 }
 
-.kategoria3 {
-	background-color: black;
+.kategoria3::after {
+	filter: drop-shadow(1px 1px 1px #222);
+	position: absolute;
+	top: 0;
+	left: 25px;
+	content: "";
+	width: 50px;
+	height: 50px;
+	background-size: 50px 50px;
+	/* background-image: url('mapbox-icon.png'); */
+	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
 	/* background-image: url('mapbox-icon.png'); */
 }
 .mapboxgl-ctrl-logo {
@@ -59,9 +110,19 @@ do wyrzucenia
 	flex-direction: column;
 }
 
+#descriptionDiv {
+	margin-bottom: .8vh;
+	border-bottom: 1px solid rgb(194, 192, 192);
+}
 .sidenav_right {
     right: -30vw;
 	transition: right .5s ease;
+}
+
+.sidenav_right img {
+    width: 26vw;
+	height: auto;
+    margin: -3vh -3vw 2vh -3vw;
 }
 
 .sidenav_right h3 {
@@ -93,19 +154,40 @@ form button {
 }
 
 .left-list-element {
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	text-align: left;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: center;
 	width: 100%;
     padding: 1vh 1vw 1vh 1vw;
-	border-radius: 10px;
-	margin-bottom: .5vh;
+	border: none;
+	border-bottom: 1px solid rgb(136, 136, 136);
 	background: none;
-	border: none !important;
+}
+
+.sort {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: flex-start;
+	align-content: flex-start;
+	margin-bottom: 1vh
+}
+
+.sort a {
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.589);
 }
 
 #sidenav_title {
-	margin-bottom: 3vh;
+	margin-bottom: 2vh;
 }
 .left-list-element span {
+	margin-left: auto;
 	float: right;
 }
 

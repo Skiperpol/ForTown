@@ -8,7 +8,7 @@ from django.contrib import messages
 
 def home_page(request):
     form = CreateNewEvent()
-    event = Event.objects.all()
+    event = Event.objects.all().order_by("start_time")
     context = {"form":form, "event":event}
     return render(request, 'home.html', context)
     
