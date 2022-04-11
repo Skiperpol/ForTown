@@ -15,15 +15,32 @@
 
 <div id="map"></div>
 
-<div id="sidenav_left" class="sidenav">
-    <div id="">
-        <button class="btn" onclick="toggle_right_menu(1)">Tymczasowy wlacznik (tylko po zalogowaniU)</button>
-        <button class="btn" onclick="toggle_right_menu(0)">Tymczasowy wyłącznik</button>
-    </div>  
+<div id="sidenav_left" class="sidenav sidenav_left">
     <!-- logowanie -->
+    <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
+    {% for e in event %}
+    <button id="e" class="left-list-element">{{ e }} <span>{{ e.start_time }}</span></button>
+    <script>
+        document.getElementById('e')
+        // sprawdz czy marker jest klikniety
+        document.getElementById('e').addEventListener("click", function() {
+            titleDiv.innerHTML = '<h3>' + "{{e.title}}" + '</h3>'
+            descriptionDiv.innerHTML = '<p class="text-secondary">' + "{{e.description}}" + '</p>'
+            authorDiv.innerHTML = '<p>Dodane przez: ' + "{{e.author}}" + '</p>'
+            start_timeDiv.innerHTML = '<p>' + "{{e.start_time}}" + '</p>'
+            deadlineDiv.innerHTML = '<p>' + "{{e.deadline}}" + '</p>'
+            type_of_eventDiv.innerHTML = '<p>' + "{{e.type_of_event}}" + '</p>'
+            toggle_right_menu(1, 'detail', "{{e.y_miejsca}}", "{{e.x_miejsca}}")
+        }, false);
+        document.getElementById('e').id="";
+    </script>
+    {% endfor %}
+
     {% if user.is_authenticated %}
     <div id="login_container">
-        <a class="btn btn-outline-dark" type="button" href="/logout">Wyloguj</a>
+        <button id="open_form" class="btn btn-outline-dark" onclick="toggle_right_menu(1, 'form'), 
+        toggle_right_menu(0, 'detail')">Dodaj wydarzenie</button>
+        <a class="btn btn-outline-dark wyloguj" type="button" href="/logout">Wyloguj</a>
     </div>
     {% else %}
     <div id="login_container">
@@ -33,24 +50,39 @@
     {% endif %}	
 </div>
 
-<div id="sidenav_right" class="sidenav">
+<div id="sidenav_right_form" class="sidenav sidenav_right">
 <!-- Formularz do wysyłania wydarzeń do panel admina -->
     <h3>Dodaj wydarzenie</h3>
     {% load crispy_forms_tags %}
     <form method="post" action="/addEvent/">
         {% csrf_token %}
         {{ form|crispy }} 
-        <button class="btn btn-outline-dark" type="submit", name="save">Create New</button>
+        <br>
+        <button class="btn btn-outline-dark" type="submit", name="save">Dodaj wydarzenie</button>
+        <button class="btn btn-outline-danger" type="button" onclick="toggle_right_menu(0,'form')">Anuluj</button>
     </form>
-<!-- ----------------------------------------------- -->
 </div>
 
-<script src="static/map_scripts.js"></script>
+<div id="sidenav_right_detail" class="sidenav sidenav_right">
+    <div id="titleDiv"></div>
+    <div id="descriptionDiv"></div>
+    <div id="authorDiv"></div>
+    <div id="start_timeDiv"></div>
+    <div id="deadlineDiv"></div>
+    <div id="type_of_eventDiv"></div>
+</div>
 
 <!-- animacje prawego sidemenu -->
 <script>
-    function toggle_right_menu(activation) {
-        let right_menu = document.getElementById("sidenav_right");
+    function toggle_right_menu(activation, id, x=0, y=0) {
+        let nazwa = "sidenav_right_" + id;
+        if (x != 0) {
+            map.flyTo({
+                center: [x, y],
+                speed: 0.2
+            });
+        }
+        let right_menu = document.getElementById(nazwa);
         let logged = "{% if user.is_authenticated %}1{% endif %}";
         if (activation == 1 && logged == 1) {
             right_menu.classList.add("active")
@@ -62,12 +94,174 @@
 
 <!-- Funkcja tworzącą punkty na mapie z panel admina -->
 <script language="javascript">
-    {% for event_location in event %}
-        var x = {{event_location.x_miejsca}}.toString()
-        var y = {{event_location.y_miejsca}}.toString()
-        dodaj_marker(y, x);
-        console.log("{{event_location.title}}")
-    {% endfor %}
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZmlsaXB0ZXN0IiwiYSI6ImNrd3V5NjhzdjFyY3YydXJ0bGl5dmhtNTUifQ.ew77j1B9ZXb20GBYznPLbQ';
+    const bounds = [
+    [17.597991, 51.518052], //  coordinates
+    [18.513122, 52.061509] //  coordinates
+    ];
+
+    const map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [18.0853, 51.7573],// starting position
+    zoom: 13.6, // starting zoom
+    maxZoom: 17,
+    minZoom: 10,
+    maxBounds: bounds // Set the map's geographical boundaries. (granice)
+    });
+    map.on('click', (e) => {
+        document.getElementById("x").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[1]).toFixed(5) 
+        document.getElementById("y").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[0]).toFixed(5) 
+    });
+
+    // funkcja dodająca markery
+    function dodaj_marker(x,y,titleAnswer,descriptionAnswer,authorAnswer,start_timeAnswer,deadlineAnswer,type_of_eventAnswer) {
+        let nowe_markery = {
+            type: 'FeatureCollection',
+            features: 
+            [{
+                type: 'Feature',
+                geometry: 
+                    {
+                    type: 'Point',
+                    coordinates: [x,y]
+                    },
+                properties: {
+                    title: titleAnswer,
+                    description: descriptionAnswer,
+                    author: authorAnswer,
+                    start_time: start_timeAnswer,
+                    deadline: deadlineAnswer,
+                    type_of_event: type_of_eventAnswer,
+                    x_miejsca: x,
+                    y_miejsca: y,
+                    }
+            }]
+        };
+        // baza_markerow.features.push(nowe_markery);
+        
+        for (const feature of nowe_markery.features) {
+            const el = document.createElement('div');
+            el.className = 'marker';
+            el.classList.add("kategoria1");
+            // sprawdz czy marker jest klikniety
+            el.addEventListener("click", function() {
+                titleDiv.innerHTML = '<h3>' + feature.properties.title + '</h3>'
+                descriptionDiv.innerHTML = '<p class="text-secondary">' + feature.properties.description + '</p>'
+                authorDiv.innerHTML = '<p>Dodane przez: ' + feature.properties.author + '</p>'
+                start_timeDiv.innerHTML = '<p>' + feature.properties.start_time + '</p>'
+                deadlineDiv.innerHTML = '<p>' + feature.properties.deadline + '</p>'
+                type_of_eventDiv.innerHTML = '<p>' + feature.properties.type_of_event + '</p>'
+                toggle_right_menu(1, 'detail', feature.properties.x_miejsca, feature.properties.y_miejsca)
+            }, false);
+                
+            new mapboxgl.Marker(el).setLngLat(nowe_markery.features[0].geometry.coordinates).addTo(map);
+        }
+    };
+
+    "{% for event_location in event %}"
+        var x = "{{event_location.x_miejsca}}".toString()
+        var y = "{{event_location.y_miejsca}}".toString()
+        var title = "{{event_location.title}}".toString()
+        var description = "{{event_location.description}}".toString()
+        var author = "{{event_location.author}}".toString()
+        var start_time = "{{event_location.start_time}}".toString()
+        var deadline = "{{event_location.deadline}}".toString()
+        var type_of_event = "{{event_location.type_of_event}}".toString()
+        dodaj_marker(y, x, title, description, author, start_time, deadline, type_of_event);
+    "{% endfor %}"
+
+
+// pisze ten koda w połowie śpiąc ale działa on tak że jesli na mapie poza markerem no to zamyka prawy sidebar
+    const markery_na_mapie = document.getElementsByClassName("marker");
+    const markery_w_liscie = document.getElementsByClassName("left-list-element")
+    const sidenav_right_detail = document.getElementById("sidenav_right_detail")
+    const sidenav_right_form = document.getElementById("sidenav_right_form")
+    const open_form = document.getElementById("open_form");
+	let worked = 0
+    window.addEventListener("click", function(e){
+        for (var i = 0; i < markery_na_mapie.length; i++) {
+            if (markery_na_mapie[i].contains(e.target)){
+                worked += 1
+            }
+        }  
+        for (var i = 0; i < markery_w_liscie.length; i++) {
+            if (markery_w_liscie[i].contains(e.target)){
+                worked += 1
+            }
+        }  
+        if (sidenav_right_detail.contains(e.target) || sidenav_right_form.contains(e.target) || open_form.contains(e.target)){
+            worked += 1
+        }
+        if (worked == 0) {
+            // toggle_right_menu(0, 'form')
+            toggle_right_menu(0, 'detail')
+        }
+        worked = 0 
+    });
+    // function dodaj_input() {
+
+    //   // usuń ewentualne poprzednie formularze
+    //   function deleteElement(elementId){
+    //     var element = document.getElementById(elementId);
+    //     if (typeof(element) != 'undefined' && element != null)
+    //     {
+    //       element.remove();
+    //     }
+    //   }
+
+    //   deleteElement("button");
+    //   deleteElement("select");
+    //   deleteElement("input");
+
+    //   // tworzenie formularzy pod mapą
+    //   var form = document.getElementById('form');
+    //   var input = document.createElement("input");
+    //   input.id = 'input';
+    //   input.class = 'input';
+    //   input.type = 'text';
+    //   input.name = 'name';
+    //   form.appendChild(input);
+    
+    //   var select_kategoria = document.createElement("select");
+    //   select_kategoria.id = "select";
+    //   select_kategoria.class = "select";
+    //   var option1 = document.createElement("option");
+    //   option1.text = "kategoria1";
+    //   var option2 = document.createElement("option");
+    //   option2.text = "kategoria2";
+    //   var option3 = document.createElement("option");
+    //   option3.text = "kategoria3";
+    //   select_kategoria.add(option1);
+    //   select_kategoria.add(option2);
+    //   select_kategoria.add(option3);
+    //   form.appendChild(select_kategoria);
+
+    //   var button = document.createElement("button");
+    //   button.id="button";
+    //   button.class="button";
+    //   button.innerHTML = "button";
+    //   form.appendChild(button);
+
+    //   // funkcja która sprawdza czy przycisk pod submit został klikniety
+    //   button.addEventListener("click", function() {    
+    //     var text = input.value;
+    //     var kategoria = select_kategoria.value;
+        
+    //     // usuń formularz
+    //     deleteElement("button");
+    //     deleteElement("select");
+    //     deleteElement("input");
+
+    //     if(text.length > 0) dodaj_marker(x, y, text, kategoria);
+    //     else alert("brak nazwy");
+    //   });
+    // };
+
+    // // potencjalne problemy:
+    // // - przy większej ilości markerów mapa sie zacina (jesli obnizymy jakość i wielkość obrazków laguje mniej)
+
+
     
 </script>
 <!-- ---------------------------------------------- -->

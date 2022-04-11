@@ -54,18 +54,17 @@ do wyrzucenia
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-#sidenav_left {
+.sidenav_left {
     display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	flex-direction: column;
 }
 
-#sidenav_right {
+.sidenav_right {
     right: -30vw;
 	transition: right .5s ease;
 }
 
-#sidenav_right h3 {
+.sidenav_right h3 {
     display: inline-block;
 	margin-bottom: 3vh;
 }
@@ -74,10 +73,39 @@ do wyrzucenia
 	height: auto;
 	margin-bottom: 0;
 	width: 100%;
-	align-self: flex-end;
+	margin-top: auto;
 	text-align: right;
 }
 
 .active {
 	right: 0 !important;
 }
+
+#login_container button {
+	width: 69% !important;
+}
+#login_container .wyloguj {
+	width: 29% !important;
+}
+
+form button {
+	width: 49% !important;
+}
+
+.left-list-element {
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	width: 100%;
+    padding: 1vh 1vw 1vh 1vw;
+	border-radius: 10px;
+	margin-bottom: .5vh;
+	background: none;
+	border: none !important;
+}
+
+#sidenav_title {
+	margin-bottom: 3vh;
+}
+.left-list-element span {
+	float: right;
+}
+

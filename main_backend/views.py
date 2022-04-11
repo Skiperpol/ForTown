@@ -11,13 +11,14 @@ def addEvent(response):
             obj=Event()
             obj.title = form.cleaned_data["title"]
             obj.description = form.cleaned_data["description"]
-            obj.author = form.cleaned_data["author"]
+            obj.author = response.user
             obj.start_time = form.cleaned_data["start_time"]
             obj.deadline = form.cleaned_data["deadline"]
             obj.type_of_event = form.cleaned_data["type_of_event"]
             obj.link_do_miejsca_wydarzenia = form.cleaned_data["link_do_miejsca_wydarzenia"]
+            obj.x_miejsca = form.cleaned_data["x"]
+            obj.y_miejsca = form.cleaned_data["y"]
             obj.save()
-            # response.user.task.add(obj)
             return HttpResponseRedirect('/')
     else:
         form = CreateNewEvent()
