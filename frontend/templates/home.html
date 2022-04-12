@@ -100,7 +100,8 @@
         if (x != 0) {
             map.flyTo({
                 center: [x, y],
-                speed: 0.2
+                speed: 0.3,
+                zoom: 15
             });
         }
         console.log(activation, id)
@@ -113,6 +114,11 @@
                 right_menu.classList.add("active")
             }
         } else {
+            if (right_menu.classList.contains("active")) {
+                map.flyTo({
+                    zoom: 13
+                })
+            }
             right_menu.classList.remove("active")
         }
     }
