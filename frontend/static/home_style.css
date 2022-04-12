@@ -99,12 +99,21 @@ do wyrzucenia
 .sort_img {
 	width: 1vw;
 	height: auto;
+	margin-left: -3px;
 }
 
 .sort_kategorie {
 	flex-basis: 33%;
 	margin-bottom: 1vh;
 	text-align: center;
+	background: none !important;
+	border: none !important;
+	color: gray !important;
+	padding: 0 !important;
+}
+
+.sort_key {
+	color: black !important;
 }
 
 .mapboxgl-ctrl-logo {
@@ -204,7 +213,9 @@ form button {
 	border-bottom: 1px solid rgb(136, 136, 136);
 	background: none;
 }
-
+.none {
+	display: none;
+}
 .sort {
 	display: flex;
 	flex-direction: row;

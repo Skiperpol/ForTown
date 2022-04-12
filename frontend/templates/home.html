@@ -21,14 +21,36 @@
     <img class="title_img" src="https://www.kalisz.pl/themes/umkalisz/images/logo.png" alt="">
     <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
     <div class="sort">
-        <a class="sort_kategorie" href="{% url 'home' %}">Nadchodzące</a>
+        <a class="sort_kategorie {% if sort_key == 'all' %}sort_key {% endif %}" href="{% url 'home' %}">Nadchodzące</a>
         <a class="sort_kategorie" href="{% url 'home' %}">Najbliżej mnie</a>
-        <a class="sort_kategorie" href="{% url 'home' %}">Trwające</a>
-        <a href="">Kulturowe<img class="sort_img" src="https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png" alt=""></a>
-        <a href="">Sportowe<img class="sort_img" src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png" alt=""></a>
-        <a href="">Rozrywkowe<img class="sort_img" src="https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png" alt=""></a>
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            {{ trwajace_form }}
+            <input class="sort_kategorie {% if sort_key == 'trwa' %}sort_key {% endif %}" type="submit" value="Trwające">
+        </form>
+        
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            {{ kulturowe_form }}
+            <input class="sort_kategorie {% if sort_key == 'kulturowe' %}sort_key {% endif %}" type="submit" value="Kulturowe">
+            <img class="sort_img" src="https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png" alt="">
+        </form>
+         
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            {{ sportowe_form }}
+            <input class="sort_kategorie {% if sort_key == 'sportowe' %}sort_key {% endif %}" type="submit" value="Sportowe">
+            <img class="sort_img" src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png" alt="">
+        </form>
+
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            {{ rozrywkowe_form }}
+            <input class="sort_kategorie {% if sort_key == 'rozrywkowe' %}sort_key {% endif %}" type="submit" value="Rozrywkowe">
+            <img class="sort_img" src="https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png" alt="">
+        </form>
     </div>
-    {% for e in event %}
+    {% for e in sortowane_eventy %}
     <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>
         {% if today.date >= e.start_time.date and today|time >= e.start_time|time and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline|time >= today|time and today|time >= e.start_time|time%}
             Trwa
@@ -205,7 +227,7 @@
         }
     };
 
-    "{% for event_location in event %}"
+    "{% for event_location in sortowane_eventy %}"
         var x = "{{event_location.x_miejsca}}".toString()
         var y = "{{event_location.y_miejsca}}".toString()
         var title = "{{event_location.title}}".toString()
