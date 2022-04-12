@@ -24,16 +24,16 @@
         <a class="sort_kategorie" href="{% url 'home' %}">Nadchodzące</a>
         <a class="sort_kategorie" href="{% url 'home' %}">Najbliżej mnie</a>
         <a class="sort_kategorie" href="{% url 'home' %}">Trwające</a>
-        <a href="">Sportowe<img class="sort_img" src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png" alt=""></a>
         <a href="">Kulturowe<img class="sort_img" src="https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png" alt=""></a>
+        <a href="">Sportowe<img class="sort_img" src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png" alt=""></a>
         <a href="">Rozrywkowe<img class="sort_img" src="https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png" alt=""></a>
     </div>
     {% for e in event %}
     <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>
-        {% if today.date >= e.start_time.date and today.time >= e.start_time.time and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline.time >= today.time and today.time >= e.start_time.time%}
+        {% if today.date >= e.start_time.date and today|time >= e.start_time|time and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline|time >= today|time and today|time >= e.start_time|time%}
             Trwa
         {% elif today.date == e.start_time.date %}
-            Dzisiaj, {{ e.start_time.time }}
+            Dzisiaj, {{ e.start_time|time }}
         {% else %}
         {{ e.start_time }}
         {% endif %}
@@ -104,7 +104,6 @@
                 zoom: 15
             });
         }
-        console.log(activation, id)
         let right_menu = document.getElementById(nazwa);
         let logged = "{% if user.is_authenticated %}1{% endif %}";
         if (activation == 1) {
