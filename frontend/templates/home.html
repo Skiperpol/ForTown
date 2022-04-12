@@ -4,6 +4,7 @@
 {% block linki %}
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+<link rel="stylesheet" href="static/mobile.css">
 {% endblock %}
 <!-- tutaj css, dla każdej podstrony dodajmy inny plik css żeby było czytelniej -->
 {% block css %}home_style.css{% endblock %}
@@ -18,7 +19,7 @@
 <div id="sidenav_left" class="sidenav sidenav_left">
     <!-- logowanie -->
     <img class="title_img" src="https://www.kalisz.pl/themes/umkalisz/images/logo.png" alt="">
-    <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
+    <h2 id="sidenav_title">Wydarzenia <br>w okolicy</h2>
     <div class="sort">
         <a class="sort_kategorie" href="{% url 'home' %}">Nadchodzące</a>
         <a class="sort_kategorie" href="{% url 'home' %}">Najbliżej mnie</a>
@@ -29,9 +30,7 @@
     </div>
     {% for e in event %}
     <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>
-        <script>console.log("{{ today}}")</script>
-        <script>console.log("{{ e.start_time}}")</script>
-        {% if today.date >= e.start_time.date and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline.time >= today.time and today.time >= e.start_time.time%}
+        {% if today.date >= e.start_time.date and today.time >= e.start_time.time and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline.time >= today.time and today.time >= e.start_time.time%}
             Trwa
         {% elif today.date == e.start_time.date %}
             Dzisiaj, {{ e.start_time.time }}
@@ -141,6 +140,19 @@
         document.getElementById("y").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[0]).toFixed(5) 
     });
 
+    // lokalizacja użytkownika
+    var geolocate = new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+    });
+    // Add the control to the map.
+    map.addControl(geolocate);
+    map.on('load', function() {
+    // geolocate.trigger(); //<- Automatically activates geolocation
+    });
+
     // funkcja dodająca markery
     function dodaj_marker(x,y,titleAnswer,descriptionAnswer,authorAnswer,start_timeAnswer,deadlineAnswer,type_of_eventAnswer) {
         let nowe_markery = {
@@ -197,7 +209,7 @@
         var start_time = "{{event_location.start_time}}".toString()
         var deadline = "{{event_location.deadline}}".toString()
         var type_of_event = "{{event_location.type_of_event}}".toString()
-        dodaj_marker(y, x, title, description, author, start_time, deadline, type_of_event);
+        dodaj_marker(y.replace(",","."), x.replace(",","."), title, description, author, start_time, deadline, type_of_event);
     "{% endfor %}"
     
 // pisze ten koda w połowie śpiąc ale działa on tak że jesli na mapie poza markerem no to zamyka prawy sidebar

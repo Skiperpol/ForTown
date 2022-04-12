@@ -17,6 +17,6 @@ class CreateNewEvent(forms.Form):
         widget=forms.Select(choices = TITLE_CHOICES, attrs={'class':'task_window'}),
         required=True
     )
-    link_do_miejsca_wydarzenia = forms.URLField(label='Link', max_length = 200, widget=forms.URLInput(attrs={'class':'task_window'}))
+    link_do_miejsca_wydarzenia = forms.URLField(required=False, label='Link', max_length = 200, widget=forms.URLInput(attrs={'class':'task_window'}))
     x = forms.FloatField(label='Naciśnij na mapę aby wybrać współrzędne geograficzne', required=True, widget=forms.NumberInput(attrs={'id': 'x', 'step': "0.0000000001"}))
     y = forms.FloatField(label='', required=True, widget=forms.NumberInput(attrs={'id': 'y', 'step': "0.0000000001"}))

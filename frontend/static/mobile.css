@@ -1,0 +1,23 @@
+@media only screen and (max-width: 600px) {
+    .sidenav_left {
+        width: 100vw !important;
+        height: 30vh !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+    #sidenav_left .title_img {
+        width: 40%;
+        height: auto;
+        margin-bottom: 2vh;
+        object-fit: contain;
+    }
+    #sidenav_title {
+        width: 40%;
+        text-align: center;
+    }
+    .sort, button, .left-list-element {
+        display: none;
+    }
+  }

@@ -5,6 +5,13 @@ do wyrzucenia
 
  */
 
+* {
+    user-select: none !important;
+}
+/* ukrywa geolocate button */
+/* .mapboxgl-ctrl-top-right {
+	display: none !important;
+} */
 #map { 
 	width: auto;
 	height: 100vh;
@@ -210,6 +217,7 @@ form button {
 	margin-bottom: 2vh;
 }
 .left-list-element span {
+	text-align: right;
 	margin-left: auto;
 	float: right;
 }

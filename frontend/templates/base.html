@@ -8,10 +8,10 @@
     <title>{% block title %}Base title{% endblock %}</title>
     {% load static %}
     
+    <link rel="stylesheet" href="static/{% block css %}base_style.css{% endblock %}">
+    <link rel="stylesheet" href="static/base_style.css">
     {% block linki %}
     {% endblock %}
-    <link rel="stylesheet" href="static/base_style.css">
-    <link rel="stylesheet" href="static/{% block css %}base_style.css{% endblock %}">
 </head>
 <body>
     <div id="base_container">
