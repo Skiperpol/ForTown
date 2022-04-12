@@ -33,3 +33,6 @@ class SportoweForm(forms.Form):
 class RozrywkoweForm(forms.Form):
     title =  forms.CharField(label='', max_length=100, widget=forms.TextInput(attrs={'class':'none', 'value':'rozrywkowe'}))
     
+class NadchodzaceForm(forms.Form):
+    title =  forms.CharField(label='', max_length=100, widget=forms.TextInput(attrs={'class':'none', 'value':'incoming'}))
+    

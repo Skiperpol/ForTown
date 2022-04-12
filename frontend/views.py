@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from main_backend.forms import CreateNewEvent, TrwajaceForm, KulturoweForm, SportoweForm, RozrywkoweForm
+from main_backend.forms import CreateNewEvent, TrwajaceForm, KulturoweForm, SportoweForm, RozrywkoweForm, NadchodzaceForm
 from main_backend.models import Event
 from .forms import NewUserForm
 from django.contrib.auth import login
@@ -9,12 +9,16 @@ from django.utils import timezone
 # Create your views here.
 
 
-def trwajace(event, today):
+def trwajace(event, today, negative=False):
     event_query = event
     for e in event:
         trwa = (today + datetime.timedelta(hours=2)) >= (e.start_time + datetime.timedelta(hours=2))
-        if not trwa:
-            event_query = event_query.exclude(id=e.id)
+        if not negative:
+            if not trwa:
+                event_query = event_query.exclude(id=e.id)
+        else:
+            if trwa:
+                event_query = event_query.exclude(id=e.id)
     return event_query
 
 def home_page(request):
@@ -32,6 +36,7 @@ def home_page(request):
     kulturowe_form = KulturoweForm(request.POST)
     sportowe_form = SportoweForm(request.POST)
     rozrywkowe_form = RozrywkoweForm(request.POST)
+    nadchodzace_form = NadchodzaceForm(request.POST)
  
     sortowane_eventy = event
     if request.method == "POST":
@@ -39,7 +44,7 @@ def home_page(request):
             sort_key = trwajace_form.cleaned_data["title"]
             if sort_key == "trwa":
                 trwajace_eventy = trwajace(event, today)
-                sortowane_eventy = trwajace_eventy
+                sortowane_eventy = trwajace_eventy.order_by("deadline")
         if kulturowe_form.is_valid():
             sort_key = kulturowe_form.cleaned_data["title"]
             if sort_key == "kulturowe":
@@ -52,12 +57,19 @@ def home_page(request):
             sort_key = rozrywkowe_form.cleaned_data["title"]
             if sort_key == "rozrywkowe":
                 sortowane_eventy = Event.objects.filter(type_of_event="Rozrywkowe").order_by("start_time")
+        if nadchodzace_form.is_valid():
+            sort_key = nadchodzace_form.cleaned_data["title"]
+            if sort_key == "incoming":
+                trwajace_eventy = trwajace(event, today, True)
+                sortowane_eventy = trwajace_eventy.order_by("deadline")
+
     trwajace_form = TrwajaceForm()
     kulturowe_form = KulturoweForm()
     sportowe_form = SportoweForm()
     rozrywkowe_form = RozrywkoweForm()
-    
-    context = {"form":form, "trwajace_form":trwajace_form, 'kulturowe_form':kulturowe_form, 'sportowe_form':sportowe_form, 'rozrywkowe_form':rozrywkowe_form, "event":event,'today':today, 'sortowane_eventy':sortowane_eventy, 'sort_key':sort_key}
+    nadchodzace_form = NadchodzaceForm()
+
+    context = {"form":form, "trwajace_form":trwajace_form, 'kulturowe_form':kulturowe_form, 'sportowe_form':sportowe_form, 'rozrywkowe_form':rozrywkowe_form, 'nadchodzace_form':nadchodzace_form, "event":event,'today':today, 'sortowane_eventy':sortowane_eventy, 'sort_key':sort_key}
     return render(request, 'home.html', context)
 
 def register_request(request):

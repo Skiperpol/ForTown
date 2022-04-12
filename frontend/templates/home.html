@@ -21,8 +21,14 @@
     <img class="title_img" src="https://www.kalisz.pl/themes/umkalisz/images/logo.png" alt="">
     <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
     <div class="sort">
-        <a class="sort_kategorie {% if sort_key == 'all' %}sort_key {% endif %}" href="{% url 'home' %}">Nadchodzące</a>
-        <a class="sort_kategorie" href="{% url 'home' %}">Najbliżej mnie</a>
+        <a class="sort_kategorie {% if sort_key == 'all' %}sort_key {% endif %}" href="{% url 'home' %}">Wszystkie</a>
+
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            {{ nadchodzace_form }}
+            <input class="sort_kategorie {% if sort_key == 'incoming' %}sort_key {% endif %}" type="submit" value="Nadchodzące">
+        </form>
+
         <form method="POST" action="{% url 'home' %}">
             {% csrf_token %}
             {{ trwajace_form }}
