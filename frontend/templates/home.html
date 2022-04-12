@@ -19,7 +19,7 @@
 <div id="sidenav_left" class="sidenav sidenav_left">
     <!-- logowanie -->
     <img class="title_img" src="https://www.kalisz.pl/themes/umkalisz/images/logo.png" alt="">
-    <h2 id="sidenav_title">Wydarzenia <br>w okolicy</h2>
+    <h2 id="sidenav_title">Wydarzenia w okolicy</h2>
     <div class="sort">
         <a class="sort_kategorie" href="{% url 'home' %}">Nadchodzące</a>
         <a class="sort_kategorie" href="{% url 'home' %}">Najbliżej mnie</a>
@@ -51,7 +51,7 @@
             start_timeDiv.innerHTML = '<p>' + "{{e.start_time}}" + '</p>'
             deadlineDiv.innerHTML = '<p>' + "{{e.deadline}}" + '</p>'
             type_of_eventDiv.innerHTML = '<p>' + "{{e.type_of_event}}" + '</p>'
-            toggle_right_menu(1, 'detail', "{{e.y_miejsca}}", "{{e.x_miejsca}}")
+            toggle_right_menu(1, 'detail', "{{e.y_miejsca}}".replace(',','.'), "{{e.x_miejsca}}".replace(',','.'))
         }, false);
         document.getElementById('e').id="";
     </script>

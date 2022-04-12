@@ -7,6 +7,7 @@ do wyrzucenia
 
 * {
     user-select: none !important;
+    font-family: 'Sora', sans-serif !important;
 }
 /* ukrywa geolocate button */
 /* .mapboxgl-ctrl-top-right {
@@ -133,6 +134,8 @@ do wyrzucenia
 .sidenav_left {
     display: flex;
 	flex-direction: column;
+	align-content: center;
+	text-align: center;
 }
 
 #descriptionDiv {
@@ -146,6 +149,10 @@ do wyrzucenia
 
 #sidenav_left .title_img {
 	width: 60%;
+	align-content: center;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 	height: auto;
 	margin-bottom: 2vh;
 }
