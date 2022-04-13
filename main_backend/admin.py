@@ -24,4 +24,6 @@ class EventAdmin(admin.ModelAdmin):
             sendEmail("filip.antoniak99@gmail.com", "Zaakceptowano wydarzenie", f"Wydarzenie {obj} zostalo zaakceptowane")
             obj.status = "Zaakceptowane"
             obj.save()
+        elif obj.status == "Oczekuje":
+            obj.save()
 admin.site.register(Event, EventAdmin)
