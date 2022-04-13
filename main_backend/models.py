@@ -11,6 +11,12 @@ TITLE_CHOICES = [
     ('Rozrywkowe', 'Rozrywkowe'),
 ]
 
+STATUS_AKCEPTACJI = [
+    ('Zaakceptowane', 'Zaakceptowane'),
+    ('Odrzucone', 'Odrzucone'),
+    ('Oczekuje', 'Oczekuje'),
+]
+
 class Event(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
@@ -18,6 +24,7 @@ class Event(models.Model):
     # author = models.CharField(max_length=50, null=True, blank=True)
     start_time = models.DateTimeField()
     deadline = models.DateTimeField()
+    status = models.CharField(max_length=30, choices=STATUS_AKCEPTACJI, default="Oczekuje")
     type_of_event = models.CharField(max_length=30, choices=TITLE_CHOICES)
     link_do_miejsca_wydarzenia =  models.URLField(max_length = 200, blank=True, null=True)
     x_miejsca = models.FloatField(null=True)

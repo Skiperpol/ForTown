@@ -25,12 +25,11 @@ def home_page(request):
     sort_key = 'all'
     form = CreateNewEvent()
     today = timezone.now()
-    event = Event.objects.all().order_by("start_time")
+    event = Event.objects.filter(status="Zaakceptowane").order_by("start_time")
     for e in event:
         if e.deadline < today:
                 Event.objects.filter(id=e.id).delete()
-                event = Event.objects.all().order_by("start_time")
-                
+                event = Event.objects.filter(status="Zaakceptowane").order_by("start_time")
 
     trwajace_form = TrwajaceForm(request.POST)
     kulturowe_form = KulturoweForm(request.POST)
@@ -48,15 +47,15 @@ def home_page(request):
         if kulturowe_form.is_valid():
             sort_key = kulturowe_form.cleaned_data["title"]
             if sort_key == "kulturowe":
-                sortowane_eventy = Event.objects.filter(type_of_event="Kulturowe").order_by("start_time")
+                sortowane_eventy = Event.objects.filter(type_of_event="Kulturowe", status="Zaakceptowane").order_by("start_time")
         if sportowe_form.is_valid():
             sort_key = sportowe_form.cleaned_data["title"]
             if sort_key == "sportowe":
-                sortowane_eventy = Event.objects.filter(type_of_event="Sportowe").order_by("start_time")
+                sortowane_eventy = Event.objects.filter(type_of_event="Sportowe", status="Zaakceptowane").order_by("start_time")
         if rozrywkowe_form.is_valid():
             sort_key = rozrywkowe_form.cleaned_data["title"]
             if sort_key == "rozrywkowe":
-                sortowane_eventy = Event.objects.filter(type_of_event="Rozrywkowe").order_by("start_time")
+                sortowane_eventy = Event.objects.filter(type_of_event="Rozrywkowe", status="Zaakceptowane").order_by("start_time")
         if nadchodzace_form.is_valid():
             sort_key = nadchodzace_form.cleaned_data["title"]
             if sort_key == "incoming":
