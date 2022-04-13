@@ -58,16 +58,13 @@
     </div>
     {% for e in sortowane_eventy %}
     <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>
-        {% if today.date >= e.start_time.date and today|time >= e.start_time|time and e.deadline.date > today.date or e.deadline.date == today.date and e.deadline|time >= today|time and today|time >= e.start_time|time%}
+        {% if today.date == e.start_time.date and today|time >= e.start_time|time or today.date > e.start_time.date %}
             Trwa
         {% elif today.date == e.start_time.date %}
             Dzisiaj, {{ e.start_time|time }}
         {% else %}
         {{ e.start_time }}
         {% endif %}
-        
-            
-        
     </span></button>
     <script>
         document.getElementById('e')
