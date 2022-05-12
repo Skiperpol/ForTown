@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import CreateNewEvent
 from .models import Event
+import datetime
 
 def addEvent(response):
     if response.method == "POST":
@@ -12,8 +13,8 @@ def addEvent(response):
             obj.title = form.cleaned_data["title"]
             obj.description = form.cleaned_data["description"]
             obj.author = response.user
-            obj.start_time = form.cleaned_data["start_time"]
-            obj.deadline = form.cleaned_data["deadline"]
+            obj.start_time = datetime.datetime.combine(form.cleaned_data["start_time"], form.cleaned_data["start_time_time"])
+            obj.deadline = datetime.datetime.combine(form.cleaned_data["deadline"], form.cleaned_data["deadline_time"])
             obj.type_of_event = form.cleaned_data["type_of_event"]
             obj.link_do_miejsca_wydarzenia = form.cleaned_data["link_do_miejsca_wydarzenia"]
             obj.x_miejsca = form.cleaned_data["x"]

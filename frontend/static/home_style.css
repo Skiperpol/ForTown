@@ -103,13 +103,13 @@ do wyrzucenia
 }
 
 .sort_kategorie {
-	flex-basis: 33.3%;
 	margin-bottom: 1vh;
 	text-align: center;
 	background: none !important;
 	border: none !important;
 	color: gray !important;
 	padding: 0 !important;
+	margin-left: .5vw;
 }
 
 .sort_key {
@@ -196,8 +196,22 @@ do wyrzucenia
 	width: 29% !important;
 }
 
-form button {
+#add_form button {
 	width: 49% !important;
+	align-content: flex-end;
+}
+
+#add_form #buttons_form {
+	flex-direction: row;
+	align-items: flex-end;
+	display: flex;
+	height: 100%;
+}
+
+#add_form {
+	display: flex;
+	height: 93%;
+	flex-direction: column;
 }
 
 .left-list-element {
@@ -220,10 +234,15 @@ form button {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: flex-start;
 	align-content: flex-start;
-	margin-bottom: 1vh
+	margin-bottom: 1vh;
+}
+
+.break {
+	flex-basis: 100%;
+	height: 0;
 }
 
 .sort a {

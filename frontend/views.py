@@ -31,6 +31,8 @@ def home_page(request):
                 Event.objects.filter(id=e.id).delete()
                 event = Event.objects.filter(status="Zaakceptowane").order_by("start_time")
 
+
+    # tutaj sie dzieją sortowania, dziwnie to rozwiązałem, ale działa
     trwajace_form = TrwajaceForm(request.POST)
     kulturowe_form = KulturoweForm(request.POST)
     sportowe_form = SportoweForm(request.POST)

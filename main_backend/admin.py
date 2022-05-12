@@ -10,7 +10,7 @@ def sendEmail(toEmail, subject, body):
 
         smtp.login("wydarzeniakalisz@outlook.com","HasloKalisz1")
 
-        msg = f'Subject: {subject}\n\n{body}'
+        msg = f'Subject: {subject}\n\n{body}'.encode('utf-8')
 
         smtp.sendmail("wydarzeniakalisz@outlook.com", toEmail, msg)
         
