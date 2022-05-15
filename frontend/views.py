@@ -8,6 +8,11 @@ import datetime
 from django.utils import timezone
 # Create your views here.
 
+def rodo(request):
+    return render (request=request, template_name="rodo.html")
+
+def polityka_prywatnosci(request):
+    return render (request=request, template_name="polityka.html")
 
 def trwajace(event, today, negative=False):
     event_query = event
