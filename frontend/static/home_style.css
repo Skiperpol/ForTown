@@ -48,6 +48,21 @@ body {
 	background-repeat: no-repeat;
 	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
 }
+.images_box {
+	width: 20vw;
+	height: 30vh;
+}
+.images_box img {
+	margin: 3px !important;
+	width: 48% !important;
+	height: 48% !important;
+	float: right;
+	
+}
+#img_1 {
+	border-radius: 10px 10px 0 0;
+	width: 20vw !important;
+}
 .Sportowe::before {
 	display: inline-block;
 	content: "";
@@ -124,14 +139,6 @@ body {
 	height: auto;
 	margin-left: -3px;
 }
-.images_box {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-}
 
 .sort_kategorie {
 	margin-bottom: .5vh;
@@ -207,6 +214,8 @@ body {
 .sidenav_right img {
     width: 26vw;
 	height: auto;
+	max-height: 35vh;
+	object-fit: cover;
     margin: -3vh -3vw 2vh -3vw;
 }
 
