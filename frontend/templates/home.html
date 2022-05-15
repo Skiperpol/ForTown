@@ -15,7 +15,6 @@
 
 <!-- główna zawartość -->
 {% block content %}
-
 <div id="map"></div>
 
 <div id="sidenav_left" class="sidenav sidenav_left">
@@ -58,6 +57,7 @@
             <img draggable="false" class="sort_img" src="https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png" alt="">
         </form>
     </div>
+    <div style="height: 100%; overflow-y: auto; margin-bottom: 60px;">
     {% for e in sortowane_eventy %}
     <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span id="{{e.title}}">
         {% if today.date == e.start_time.date and today|time >= e.start_time|time or today.date > e.start_time.date %}
@@ -86,7 +86,7 @@
         document.getElementById('e').id="";
     </script>
     {% endfor %}
-
+    </div>
     {% if user.is_authenticated %}
     <div id="login_container">
         <button id="open_form" class=" register btn btn-outline-dark" onclick="toggle_right_menu(1, 'form'), 
@@ -107,7 +107,7 @@
     {% load crispy_forms_tags %}
     <form id="add_form" method="post" action="/addEvent/" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form|crispy }} 
+        {{ form|crispy }}
         <br>
         <div id="buttons_form">
             <button class="btn btn-outline-dark" type="submit", name="save">Dodaj wydarzenie</button>
@@ -130,6 +130,77 @@
     <div id="type_of_eventDiv"></div>
     <div id="authorDiv"></div>
 </div>
+<!-- Wstawianie zdjęć -->
+<script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //         var files = []
+        //         FilePond.registerPlugin(FilePondPluginFileValidateSize);
+        //         FilePond.registerPlugin(FilePondPluginFileValidateType);
+        //         FilePond.setOptions({
+        //         allowMultiple:true,
+        //         maxFiles:2,
+        //         maxFileSize: '1MB'
+        //         })
+        //         const inputElement = document.querySelector('input[type="file"]');
+        //         const pond = FilePond.create(inputElement);
+        //         })
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var files = []
+    //     FilePond.registerPlugin(FilePondPluginFileValidateSize);
+    //     FilePond.registerPlugin(FilePondPluginFileValidateType);
+    //     FilePond.setOptions({
+    //         allowMultiple:true,
+    //         maxFiles:2,
+    //         maxFileSize: '1MB'
+    //     })
+    //     const inputElement = document.querySelector('input[type="file"]');
+    //     const pond = FilePond.create( inputElement, {
+    //         acceptedFileTypes:['image/png', 'image/jpeg'],
+    //         onaddfile: (err, fileItem) => {
+    //             if (!err) {
+    //             files.push(fileItem.file)
+    //             }
+    //             console.log(files)
+    //         },
+    //         onremovefile: (err, fileItem) => {
+    //             const index = files.indexOf(fileItem.file)
+    //             if (index > -1) {
+    //                 files.splice(index, 1)
+    //             }
+    //             console.log(files)
+    //         }
+    //     } );
+
+    //     var formData = new FormData();
+    //     $(document).on('click', '#saveBtn', function(e) {
+    //         formData.append('length', files.length)
+    //         formData.append('title', $('#title').val())
+    //         formData.append('description', $('#description').val())
+    //         for (var i = 0; i < files.length; i++) {
+    //             formData.append('images' + i, files[i])
+    //         }
+    //         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: '{% url "home" %}',
+    //             data: formData,
+    //             cache: false,
+    //             processData: false,
+    //             contentType: false,
+    //             enctype: 'multipart/form-data',
+    //             success: function (){
+    //                 alert('The post has been created!')
+    //             },
+    //             error: function(xhr, errmsg, err) {
+    //                 console.log(xhr.status + ":" + xhr.responseText)
+    //             }
+    //         })
+    //     })
+    // })
+</script>
 <!-- animacje prawego sidemenu -->
 <script>
     function toggle_right_menu(activation, id, x=0, y=0) {
