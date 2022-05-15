@@ -4,7 +4,13 @@ nie czytałem tego co tu jest wiec większosć klas jest pewnie
 do wyrzucenia
 
  */
-
+body {
+	overflow-x: hidden !important;
+	overflow-y: hidden;
+}
+.ov{
+	overflow-y: auto !important; 
+}
 * {
     user-select: none !important;
     font-family: 'Sora', sans-serif !important;
@@ -16,6 +22,7 @@ do wyrzucenia
 #map { 
 	width: auto;
 	height: 100vh;
+	transition: all .5s ease;
 }
 .marker {
 	width: 100px;
@@ -95,7 +102,18 @@ do wyrzucenia
 	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
 	/* background-image: url('mapbox-icon.png'); */
 }
-
+#mobiletitle {
+	display: none;
+}
+#mobiletrwa {
+	display: none;
+}
+#mobilesign {
+	display: none;
+}
+.data_telefon {
+	display: none;
+}
 .sort_img {
 	width: 1vw;
 	height: auto;
@@ -103,7 +121,7 @@ do wyrzucenia
 }
 
 .sort_kategorie {
-	margin-bottom: 1vh;
+	margin-bottom: .5vh;
 	text-align: center;
 	background: none !important;
 	border: none !important;
@@ -132,7 +150,6 @@ do wyrzucenia
 .sidenav {
     background-color: #fff;
     width: 26vw;
-	height: 100vh;
     z-index: 2;
     position: fixed;
     top: 0;
@@ -141,21 +158,27 @@ do wyrzucenia
 }
 
 .sidenav_left {
+	height: 100vh;
     display: flex;
 	flex-direction: column;
 	align-content: center;
 	text-align: center;
+	transition: all .5s ease;
 }
-
+#sidenav_right_form {
+	position: absolute !important;
+    overflow-y:scroll;
+    overflow-x:hidden;
+	height: 100vh;
+}
 #descriptionDiv {
 	margin-bottom: .8vh;
 	border-bottom: 1px solid rgb(194, 192, 192);
 }
 .sidenav_right {
+    min-height: 100vh;
     right: -30vw;
-	transition: right .5s ease;
-	height: 100%;
-	overflow-y: auto;
+	transition: all .5s ease;
 }
 
 #sidenav_left .title_img {
@@ -189,6 +212,11 @@ do wyrzucenia
 
 .active {
 	right: 0 !important;
+}
+
+.register {
+	background-color: #212529 !important;
+	color: #ffffff !important;
 }
 
 #login_container button {

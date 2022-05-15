@@ -18,7 +18,7 @@ class CreateNewEvent(forms.Form):
     description = forms.CharField(label='Opis', max_length=300, widget=forms.Textarea(attrs={'class':'task_window', 'placeholder':'Otwarty turniej piłkarski', 'rows' : 5}))
     main_image = forms.ImageField(label='Główne zdjęcie', required=False)
     start_time = forms.DateField(label='Data rozpoczęcia', widget=NumberInput(attrs={'type': 'date', 'class':'task_date'}))
-    start_time_time = forms.TimeField(label="Godzina rozpoczęcia", widget=TimePickerInput)
+    start_time_time = forms.TimeField(label="", widget=TimePickerInput)
     deadline = forms.DateField(label='Przewidywana data zakończenia', widget=NumberInput(attrs={'type': 'date', 'class':'task_date'}))
     deadline_time = forms.TimeField(label="Przewidywana odzina zakończenia", widget=TimePickerInput)
     type_of_event = forms.CharField(label='Wybierz rodzaj wydarzenia',
