@@ -222,6 +222,7 @@
         let right_menu = document.getElementById(nazwa);
         let mapa = document.getElementById('map')
         let logged = "{% if user.is_authenticated %}1{% endif %}";
+        console.log(activation,logged,nazwa)
         if (activation == 1) {
             if (logged == 1) {
                 document.getElementById("body").classList.add("ov")

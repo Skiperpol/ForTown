@@ -19,7 +19,11 @@
     {% load crispy_forms_tags %}
 	<form method="POST">
 		{% csrf_token %}
-		{{ register_form|crispy }}                    
+		{{ register_form|crispy }}       
+        <label for="rodo"><a href="{% url 'rodo' %}" target="_blank" rel="noopener noreferrer">Akcetuję politykę RODO*</a></label>
+        <input type="checkbox" name="rodo" id="rodo" required> <br>
+        <label for="pol"><a href="{% url 'polityka_prywatnosci' %}" target="_blank" rel="noopener noreferrer">Akcetuję politykę prywatności*</a></label>
+        <input type="checkbox" name="pol" id="pol" required>  <br>           
 		<button class="btn btn-success" type="submit">Zarejestruj</button>
 	</form>
 	<p class="text-center">Jeśli masz już konto, <a href="/login">zaloguj się.</a></p>
