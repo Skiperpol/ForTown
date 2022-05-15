@@ -63,6 +63,7 @@
             <img draggable="false" class="sort_img" src="https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png" alt="">
         </form>
     </div>
+    <div style="height: 100%; overflow-y: auto; margin-bottom: 60px;">
     {% for e in sortowane_eventy %}
     <button id="e" class="left-list-element {{e.type_of_event}}">{{ e }} <span>
         {% if today.date == e.start_time.date and today|time >= e.start_time|time or today.date > e.start_time.date %}
@@ -88,7 +89,7 @@
         document.getElementById('e').id="";
     </script>
     {% endfor %}
-
+    </div>
     {% if user.is_authenticated %}
     <div id="login_container">
         <button id="open_form" class="btn btn-outline-dark" onclick="toggle_right_menu(1, 'form'), 
