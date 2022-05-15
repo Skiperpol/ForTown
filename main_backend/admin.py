@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event
+from .models import Event, Image
 import smtplib
 
 def sendEmail(toEmail, subject, body):
@@ -14,7 +14,12 @@ def sendEmail(toEmail, subject, body):
 
         smtp.sendmail("wydarzeniakalisz@outlook.com", toEmail, msg)
         
+class ImageAdmin(admin.TabularInline):
+    model = Image
+    extra = 0
+
 class EventAdmin(admin.ModelAdmin):
+    inlines = [ImageAdmin,]
     # wywołuje sie przy zapisie w panel adminie
     def save_model(self, request, obj, form, change):
         if obj.status == "Odrzucone":

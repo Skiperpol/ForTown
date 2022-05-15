@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.widgets import NumberInput
+from .validator import file_size
 
 TITLE_CHOICES = [
     ('Sportowe', 'Sportowe'),
@@ -26,6 +27,7 @@ class CreateNewEvent(forms.Form):
     link_do_miejsca_wydarzenia = forms.URLField(required=False, label='Link', max_length = 200, widget=forms.URLInput(attrs={'class':'task_window'}))
     x = forms.FloatField(label='Naciśnij na mapę aby wybrać współrzędne geograficzne', required=True, widget=forms.NumberInput(attrs={'id': 'x', 'step': "0.0000000001"}))
     y = forms.FloatField(label='', required=True, widget=forms.NumberInput(attrs={'id': 'y', 'step': "0.0000000001"}))
+    image = forms.ImageField(required=False, validators=[file_size])
 
 class TrwajaceForm(forms.Form):
     title =  forms.CharField(label='', max_length=100, widget=forms.TextInput(attrs={'class':'none', 'value':'trwa'}))
