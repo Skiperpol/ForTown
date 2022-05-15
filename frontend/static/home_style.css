@@ -24,6 +24,11 @@ body {
 	height: 100vh;
 	transition: all .5s ease;
 }
+/* .mapboxgl-canvas {
+	height: auto !important;
+	min-height: 100% !important;
+	width: 100% !important;
+} */
 .marker {
 	width: 100px;
 	height: 100px;
@@ -118,6 +123,14 @@ body {
 	width: 1vw;
 	height: auto;
 	margin-left: -3px;
+}
+.images_box {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
 }
 
 .sort_kategorie {

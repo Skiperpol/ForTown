@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from main_backend.forms import CreateNewEvent, TrwajaceForm, KulturoweForm, SportoweForm, RozrywkoweForm, NadchodzaceForm
-from main_backend.models import Event
+from main_backend.models import Event, Image
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
@@ -26,6 +26,7 @@ def home_page(request):
     form = CreateNewEvent()
     today = timezone.now()
     event = Event.objects.filter(status="Zaakceptowane").order_by("start_time")
+    image = Image.objects.all()
     for e in event:
         if e.deadline < today:
                 Event.objects.filter(id=e.id).delete()
@@ -70,7 +71,7 @@ def home_page(request):
     rozrywkowe_form = RozrywkoweForm()
     nadchodzace_form = NadchodzaceForm()
 
-    context = {"form":form, "trwajace_form":trwajace_form, 'kulturowe_form':kulturowe_form, 'sportowe_form':sportowe_form, 'rozrywkowe_form':rozrywkowe_form, 'nadchodzace_form':nadchodzace_form, "event":event,'today':today, 'sortowane_eventy':sortowane_eventy, 'sort_key':sort_key}
+    context = {"form":form, "trwajace_form":trwajace_form, 'kulturowe_form':kulturowe_form, 'sportowe_form':sportowe_form, 'rozrywkowe_form':rozrywkowe_form, 'nadchodzace_form':nadchodzace_form, "event":event,'today':today, 'sortowane_eventy':sortowane_eventy, 'sort_key':sort_key, 'image':image}
     return render(request, 'home.html', context)
 
 def register_request(request):

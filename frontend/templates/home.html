@@ -122,13 +122,19 @@
     <div id="mobilesign"></div>
     <div class="data_telefon" id="mobilestart"></div>
     <div class="data_telefon" id="mobileend"></div>
-    <img id="detail_main_img" draggable="false" src="https://previews.123rf.com/images/michalludwiczak/michalludwiczak1909/michalludwiczak190900164/130067224-old-town-street-in-city-of-kalisz-in-central-poland.jpg" alt="">
+    <!-- <img id="detail_main_img" draggable="false" src="https://previews.123rf.com/images/michalludwiczak/michalludwiczak1909/michalludwiczak190900164/130067224-old-town-street-in-city-of-kalisz-in-central-poland.jpg" alt=""> -->
+    <img id="detail_main_img" src="" alt="">
     <div id="titleDiv"></div>
     <div id="descriptionDiv"></div>
     <div id="start_timeDiv"></div>
     <div id="deadlineDiv"></div>
     <div id="type_of_eventDiv"></div>
     <div id="authorDiv"></div>
+    <div class="images_box">
+        <img id="img_1" src="" alt="">
+        <img id="img_2" src="" alt="">
+        <img id="img_3" src="" alt="">
+    </div>
 </div>
 <!-- Wstawianie zdjęć -->
 <script>
@@ -216,7 +222,6 @@
         let right_menu = document.getElementById(nazwa);
         let mapa = document.getElementById('map')
         let logged = "{% if user.is_authenticated %}1{% endif %}";
-        console.log(activation,logged,nazwa)
         if (activation == 1) {
             if (logged == 1) {
                 document.getElementById("body").classList.add("ov")
@@ -279,7 +284,7 @@
     });
 
     // funkcja dodająca markery
-    function dodaj_marker(x,y,titleAnswer,descriptionAnswer,authorAnswer,start_timeAnswer,deadlineAnswer,type_of_eventAnswer) {
+    function dodaj_marker(x,y,titleAnswer,descriptionAnswer,authorAnswer,start_timeAnswer,deadlineAnswer,type_of_eventAnswer,main_imageAnswer, imagesAnswer) {
         let nowe_markery = {
             type: 'FeatureCollection',
             features: 
@@ -299,6 +304,8 @@
                     type_of_event: type_of_eventAnswer,
                     x_miejsca: x,
                     y_miejsca: y,
+                    main_image: main_imageAnswer,
+                    images: imagesAnswer
                     }
             }]
         };
@@ -318,7 +325,13 @@
                 mobiletitle.innerHTML = '<h3>' + feature.properties.title + '</h3>'
                 mobilestart.innerHTML = '<p>' + feature.properties.start_time + '</p>'
                 mobileend.innerHTML = '<p>' + feature.properties.deadline + '</p>'
+                document.getElementById("detail_main_img").src="media/"+feature.properties.main_image;
                 titleDiv.innerHTML = '<h3>' + feature.properties.title + '</h3>'
+                var j = 1;
+                for (const i of feature.properties.images) {
+                    document.getElementById("img_"+j).src="media/"+i;
+                    j=j+1;
+                }
                 descriptionDiv.innerHTML = '<p class="text-secondary">' + feature.properties.description + '</p>'
                 authorDiv.innerHTML = '<p>Dodane przez: ' + feature.properties.author + '</p>'
                 start_timeDiv.innerHTML = '<p>' + feature.properties.start_time + '</p>'
@@ -340,7 +353,14 @@
         var start_time = "{{event_location.start_time}}".toString()
         var deadline = "{{event_location.deadline}}".toString()
         var type_of_event = "{{event_location.type_of_event}}".toString()
-        dodaj_marker(y.replace(",","."), x.replace(",","."), title, description, author, start_time, deadline, type_of_event);
+        var main_image = "{{event_location.main_image}}".toString()
+        var images = []
+        "{% for i in image %}"
+            "{% if i.event == event_location %}"
+                images.push("{{i.image}}").toString()
+            "{% endif %}"
+        "{% endfor %}"
+        dodaj_marker(y.replace(",","."), x.replace(",","."), title, description, author, start_time, deadline, type_of_event, main_image, images);
     "{% endfor %}"
     
 // pisze ten koda w połowie śpiąc ale działa on tak że jesli na mapie poza markerem no to zamyka prawy sidebar
@@ -375,6 +395,8 @@
         }
         worked = 0 
     });
+
+
     // function dodaj_input() {
 
     //   // usuń ewentualne poprzednie formularze
@@ -440,6 +462,7 @@
 
     
 </script>
+
 <!-- ---------------------------------------------- -->
 
 {% endblock %}
