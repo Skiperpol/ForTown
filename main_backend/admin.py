@@ -32,3 +32,7 @@ class EventAdmin(admin.ModelAdmin):
         elif obj.status == "Oczekuje":
             obj.save()
 admin.site.register(Event, EventAdmin)
+
+class ImageAdmin2(admin.ModelAdmin):
+    model = Image
+admin.site.register(Image, ImageAdmin2)

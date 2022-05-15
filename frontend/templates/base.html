@@ -13,10 +13,18 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="static/{% block css %}base_style.css{% endblock %}">
     <link rel="stylesheet" href="static/base_style.css">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
     {% block linki %}
     {% endblock %}
 </head>
 <body>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
     <div id="base_container">
         {% block content %}{% endblock %}
     </div>

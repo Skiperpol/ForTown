@@ -10,7 +10,6 @@
 <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 <meta http-equiv="pragma" content="no-cache" />
 
-
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
 <link rel="stylesheet" href="static/mobile.css">
@@ -22,7 +21,6 @@
 
 <!-- główna zawartość -->
 {% block content %}
-
 <div id="map"></div>
 
 <div id="sidenav_left" class="sidenav sidenav_left">
@@ -109,9 +107,9 @@
 <!-- Formularz do wysyłania wydarzeń do panel admina -->
     <h3>Dodaj wydarzenie</h3>
     {% load crispy_forms_tags %}
-    <form id="add_form" method="post" action="/addEvent/">
+    <form id="add_form" method="post" action="/addEvent/" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form|crispy }} 
+        {{ form|crispy }}
         <br>
         <div id="buttons_form">
             <button class="btn btn-outline-dark" type="submit", name="save">Dodaj wydarzenie</button>
@@ -129,6 +127,77 @@
     <div id="type_of_eventDiv"></div>
     <div id="authorDiv"></div>
 </div>
+<!-- Wstawianie zdjęć -->
+<script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //         var files = []
+        //         FilePond.registerPlugin(FilePondPluginFileValidateSize);
+        //         FilePond.registerPlugin(FilePondPluginFileValidateType);
+        //         FilePond.setOptions({
+        //         allowMultiple:true,
+        //         maxFiles:2,
+        //         maxFileSize: '1MB'
+        //         })
+        //         const inputElement = document.querySelector('input[type="file"]');
+        //         const pond = FilePond.create(inputElement);
+        //         })
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var files = []
+    //     FilePond.registerPlugin(FilePondPluginFileValidateSize);
+    //     FilePond.registerPlugin(FilePondPluginFileValidateType);
+    //     FilePond.setOptions({
+    //         allowMultiple:true,
+    //         maxFiles:2,
+    //         maxFileSize: '1MB'
+    //     })
+    //     const inputElement = document.querySelector('input[type="file"]');
+    //     const pond = FilePond.create( inputElement, {
+    //         acceptedFileTypes:['image/png', 'image/jpeg'],
+    //         onaddfile: (err, fileItem) => {
+    //             if (!err) {
+    //             files.push(fileItem.file)
+    //             }
+    //             console.log(files)
+    //         },
+    //         onremovefile: (err, fileItem) => {
+    //             const index = files.indexOf(fileItem.file)
+    //             if (index > -1) {
+    //                 files.splice(index, 1)
+    //             }
+    //             console.log(files)
+    //         }
+    //     } );
+
+    //     var formData = new FormData();
+    //     $(document).on('click', '#saveBtn', function(e) {
+    //         formData.append('length', files.length)
+    //         formData.append('title', $('#title').val())
+    //         formData.append('description', $('#description').val())
+    //         for (var i = 0; i < files.length; i++) {
+    //             formData.append('images' + i, files[i])
+    //         }
+    //         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: '{% url "home" %}',
+    //             data: formData,
+    //             cache: false,
+    //             processData: false,
+    //             contentType: false,
+    //             enctype: 'multipart/form-data',
+    //             success: function (){
+    //                 alert('The post has been created!')
+    //             },
+    //             error: function(xhr, errmsg, err) {
+    //                 console.log(xhr.status + ":" + xhr.responseText)
+    //             }
+    //         })
+    //     })
+    // })
+</script>
 <!-- animacje prawego sidemenu -->
 <script>
     function toggle_right_menu(activation, id, x=0, y=0) {
