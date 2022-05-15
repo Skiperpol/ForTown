@@ -49,11 +49,8 @@ body {
 	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
 }
 .images_box {
-	position: absolute;
-	bottom: 3vh;
-	width: 26vw;
-	height: 25vh;    
-	margin: 0 -3vw;
+	width: 20vw;
+	height: 30vh;
 }
 .images_box img {
 	margin: 3px !important;
@@ -64,7 +61,7 @@ body {
 }
 #img_1 {
 	border-radius: 10px 10px 0 0;
-	width: calc(26vw - 6px) !important;
+	width: 20vw !important;
 }
 .Sportowe::before {
 	display: inline-block;

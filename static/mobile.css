@@ -31,7 +31,7 @@
     .sidenav_right {
         top: 100vh;
         right: 0;
-        min-height: 80vh;
+        min-height: 100vh;
         height: 200vh;
     }
     .mobilenone {
@@ -51,16 +51,6 @@
         display: inline-block;
         width: 43%;
     }
-    #sidenav_right_detail {
-        height: 80vh !important;
-    }
-    .images_box {
-        width: 100%;
-    }
-    #img_1 {
-        width: 98.5% !important;
-    }
-    
     .sidenav_right #detail_main_img {
         margin: auto;
         display: block;
