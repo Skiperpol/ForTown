@@ -11,7 +11,7 @@
 <!-- tutaj css, dla każdej podstrony dodajmy inny plik css żeby było czytelniej -->
 {% block css %}home_style.css{% endblock %}
 <!-- tytuł -->
-{% block title %}Home title{% endblock %}
+{% block title %}GeoEvents{% endblock %}
 
 <!-- główna zawartość -->
 {% block content %}
@@ -35,7 +35,7 @@
             {{ trwajace_form }}
             <input class="sort_kategorie {% if sort_key == 'trwa' %}sort_key {% endif %}" type="submit" value="Trwające">
         </form>
-        
+
         <div class="break"></div>
         <form method="POST" action="{% url 'home' %}">
             {% csrf_token %}
@@ -73,14 +73,27 @@
         // sprawdz czy marker jest klikniety
         document.getElementById('e').addEventListener("click", function() {
             mobiletitle.innerHTML = '<h3>' + "{{e.title}}" + '</h3>'
-            mobilestart = '<p>' + "{{e.start_time}}" + '</p>'
-            mobileend = '<p>' + "{{e.deadline}}" + '</p>'
             titleDiv.innerHTML = '<h3>' + "{{e.title}}" + '</h3>'
+            document.getElementById("detail_main_img").src="media/"+"{{e.main_image}}";
+            var j = 1;
+            for (let i = 0; i < 3; i++) {
+                document.getElementById("img_"+(i+1)).style.display = 'none';
+            }
+            var images = []
+            "{% for i in image %}"
+                "{% if i.event == e %}"
+                    images.push("{{i.image}}").toString()
+                "{% endif %}"
+            "{% endfor %}"
+            for (const i of images) {
+                document.getElementById("img_"+j).src="media/"+i;
+                document.getElementById("img_"+j).style.display = 'block';
+                j=j+1;
+            }
             descriptionDiv.innerHTML = '<p class="text-secondary">' + "{{e.description}}" + '</p>'
-            authorDiv.innerHTML = '<p>Dodane przez: ' + "{{e.author}}" + '</p>'
-            start_timeDiv.innerHTML = '<p>' + "{{e.start_time}}" + '</p>'
-            deadlineDiv.innerHTML = '<p>' + "{{e.deadline}}" + '</p>'
-            type_of_eventDiv.innerHTML = '<p>' + "{{e.type_of_event}}" + '</p>'
+            // authorDiv.innerHTML = '<p>Dodane przez: ' + "{{e.author}}" + '</p>'
+            start_timeDiv.innerHTML = '<p>' + "{{e.start_time}}" + " - " + "{{e.deadline}}" + '</p>'
+            // type_of_eventDiv.innerHTML = '<p>' + "{{e.type_of_event}}" + '</p>'
             toggle_right_menu(1, 'detail', "{{e.y_miejsca}}".replace(',','.'), "{{e.x_miejsca}}".replace(',','.'))
         }, false);
         document.getElementById('e').id="";
@@ -89,7 +102,7 @@
     </div>
     {% if user.is_authenticated %}
     <div id="login_container">
-        <button id="open_form" class=" register btn btn-outline-dark" onclick="toggle_right_menu(1, 'form'), 
+        <button id="open_form" class=" register btn btn-outline-dark" onclick="toggle_right_menu(1, 'form'),
         toggle_right_menu(0, 'detail')">Dodaj wydarzenie</button>
         <a class="btn btn-outline-dark wyloguj" type="button" href="/logout">Wyloguj</a>
     </div>
@@ -98,11 +111,12 @@
         <a class="btn btn-outline-dark" type="button" href="/login">Zaloguj</a>
         <a class="register btn btn-outline-dark" type="button" href="{% url 'register' %}">Zarejestruj</a>
     </div>
-    {% endif %}	
+    {% endif %}
 </div>
 
 <div id="sidenav_right_form" class="sidenav sidenav_right">
 <!-- Formularz do wysyłania wydarzeń do panel admina -->
+    <div id="mobilegray"></div>
     <h3>Dodaj wydarzenie</h3>
     {% load crispy_forms_tags %}
     <form id="add_form" method="post" action="/addEvent/" enctype="multipart/form-data">
@@ -117,98 +131,26 @@
 </div>
 
 <div id="sidenav_right_detail" class="sidenav sidenav_right">
+    <div id="mobilegray"></div>
     <div id="mobiletrwa"></div>
     <div id="mobiletitle"></div>
     <div id="mobilesign"></div>
-    <div class="data_telefon" id="mobilestart"></div>
-    <div class="data_telefon" id="mobileend"></div>
-    <!-- <img id="detail_main_img" draggable="false" src="https://previews.123rf.com/images/michalludwiczak/michalludwiczak1909/michalludwiczak190900164/130067224-old-town-street-in-city-of-kalisz-in-central-poland.jpg" alt=""> -->
     <img id="detail_main_img" src="" alt="">
+    <div id="pctrwa"></div>
     <div id="titleDiv"></div>
     <div id="descriptionDiv"></div>
     <div id="start_timeDiv"></div>
-    <div id="deadlineDiv"></div>
-    <div id="type_of_eventDiv"></div>
-    <div id="authorDiv"></div>
+    <!--<div id="type_of_eventDiv"></div>-->
+    <!--<div id="authorDiv"></div>-->
     <div class="images_box">
         <img id="img_1" src="" alt="">
         <img id="img_2" src="" alt="">
         <img id="img_3" src="" alt="">
     </div>
 </div>
-<!-- Wstawianie zdjęć -->
-<script>
-        // document.addEventListener('DOMContentLoaded', function() {
-        //         var files = []
-        //         FilePond.registerPlugin(FilePondPluginFileValidateSize);
-        //         FilePond.registerPlugin(FilePondPluginFileValidateType);
-        //         FilePond.setOptions({
-        //         allowMultiple:true,
-        //         maxFiles:2,
-        //         maxFileSize: '1MB'
-        //         })
-        //         const inputElement = document.querySelector('input[type="file"]');
-        //         const pond = FilePond.create(inputElement);
-        //         })
-
-
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     var files = []
-    //     FilePond.registerPlugin(FilePondPluginFileValidateSize);
-    //     FilePond.registerPlugin(FilePondPluginFileValidateType);
-    //     FilePond.setOptions({
-    //         allowMultiple:true,
-    //         maxFiles:2,
-    //         maxFileSize: '1MB'
-    //     })
-    //     const inputElement = document.querySelector('input[type="file"]');
-    //     const pond = FilePond.create( inputElement, {
-    //         acceptedFileTypes:['image/png', 'image/jpeg'],
-    //         onaddfile: (err, fileItem) => {
-    //             if (!err) {
-    //             files.push(fileItem.file)
-    //             }
-    //             console.log(files)
-    //         },
-    //         onremovefile: (err, fileItem) => {
-    //             const index = files.indexOf(fileItem.file)
-    //             if (index > -1) {
-    //                 files.splice(index, 1)
-    //             }
-    //             console.log(files)
-    //         }
-    //     } );
-
-    //     var formData = new FormData();
-    //     $(document).on('click', '#saveBtn', function(e) {
-    //         formData.append('length', files.length)
-    //         formData.append('title', $('#title').val())
-    //         formData.append('description', $('#description').val())
-    //         for (var i = 0; i < files.length; i++) {
-    //             formData.append('images' + i, files[i])
-    //         }
-    //         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: '{% url "home" %}',
-    //             data: formData,
-    //             cache: false,
-    //             processData: false,
-    //             contentType: false,
-    //             enctype: 'multipart/form-data',
-    //             success: function (){
-    //                 alert('The post has been created!')
-    //             },
-    //             error: function(xhr, errmsg, err) {
-    //                 console.log(xhr.status + ":" + xhr.responseText)
-    //             }
-    //         })
-    //     })
-    // })
-</script>
 <!-- animacje prawego sidemenu -->
 <script>
+
     function toggle_right_menu(activation, id, x=0, y=0) {
         if (x != 0) {
             map.flyTo({
@@ -222,15 +164,16 @@
         let right_menu = document.getElementById(nazwa);
         let mapa = document.getElementById('map')
         let logged = "{% if user.is_authenticated %}1{% endif %}";
-        console.log(activation,logged,nazwa)
         if (activation == 1) {
+            left_menu.classList.add("mobilenone")
+            document.getElementById("body").classList.add("ov")
             if (logged == 1) {
-                document.getElementById("body").classList.add("ov")
                 right_menu.classList.add("active")
-            } else if(id=="detail") {
-                left_menu.classList.add("mobilenone")
+            }
+            if(id=="detail") {
                 mapa.classList.add("map_active")
                 right_menu.classList.add("active")
+                document.getElementById("sidenav_right_form").classList.add("disable")
             }
         } else {
             if (right_menu.classList.contains("active") && nazwa=="sidenav_right_detail") {
@@ -239,10 +182,16 @@
                 })
             }
             if (nazwa=="sidenav_right_form") {
+                left_menu.classList.remove("mobilenone")
+            }
+            if (document.getElementById("sidenav_right_form").classList.contains("active")) {
+                //pass
+            } else {
+                left_menu.classList.remove("mobilenone")
                 document.getElementById("body").classList.remove("ov")
             }
+            document.getElementById("sidenav_right_form").classList.remove("disable")
             mapa.classList.remove("map_active")
-            left_menu.classList.remove("mobilenone")
             right_menu.classList.remove("active")
             window.scrollTo(-10, -10);
         }
@@ -267,8 +216,8 @@
     maxBounds: bounds // Set the map's geographical boundaries. (granice)
     });
     map.on('click', (e) => {
-        document.getElementById("x").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[1]).toFixed(5) 
-        document.getElementById("y").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[0]).toFixed(5) 
+        document.getElementById("x").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[1]).toFixed(5)
+        document.getElementById("y").value = parseFloat(JSON.stringify(e.lngLat.wrap()).replace('{"lng":', '').replace('"lat":', '').replace('}', '').split(",")[0]).toFixed(5)
     });
 
     // lokalizacja użytkownika
@@ -288,10 +237,10 @@
     function dodaj_marker(x,y,titleAnswer,descriptionAnswer,authorAnswer,start_timeAnswer,deadlineAnswer,type_of_eventAnswer,main_imageAnswer, imagesAnswer) {
         let nowe_markery = {
             type: 'FeatureCollection',
-            features: 
+            features:
             [{
                 type: 'Feature',
-                geometry: 
+                geometry:
                     {
                     type: 'Point',
                     coordinates: [x,y]
@@ -311,7 +260,7 @@
             }]
         };
         // baza_markerow.features.push(nowe_markery);
-        
+
         for (const feature of nowe_markery.features) {
             const el = document.createElement('div');
             el.className = 'marker';
@@ -319,28 +268,30 @@
 
             el.classList.add(kategorie[feature.properties.type_of_event]);
             // sprawdz czy marker jest klikniety
-            
+
             el.addEventListener("click", function() {
-                mobiletrwa.innerHTML = '<h5>' + document.getElementById(feature.properties.title).innerHTML + "</h5>" 
+                mobiletrwa.innerHTML = '<h5>' + document.getElementById(feature.properties.title).innerHTML + "</h5>"
+                pctrwa.innerHTML = '<h5>' + document.getElementById(feature.properties.title).innerHTML + "</h5>"
                 mobilesign.innerHTML = {'kategoria2':'<img src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png"/>', 'kategoria3':'<img src="https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png"/>', 'kategoria1':'<img src="https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png" />'}[kategorie[feature.properties.type_of_event]]
                 mobiletitle.innerHTML = '<h3>' + feature.properties.title + '</h3>'
-                mobilestart.innerHTML = '<p>' + feature.properties.start_time + '</p>'
-                mobileend.innerHTML = '<p>' + feature.properties.deadline + '</p>'
                 document.getElementById("detail_main_img").src="media/"+feature.properties.main_image;
                 titleDiv.innerHTML = '<h3>' + feature.properties.title + '</h3>'
+                for (let i = 0; i < 3; i++) {
+                    document.getElementById("img_"+(i+1)).style.display = 'none';
+                }
                 var j = 1;
                 for (const i of feature.properties.images) {
                     document.getElementById("img_"+j).src="media/"+i;
+                    document.getElementById("img_"+j).style.display = 'block';
                     j=j+1;
                 }
                 descriptionDiv.innerHTML = '<p class="text-secondary">' + feature.properties.description + '</p>'
-                authorDiv.innerHTML = '<p>Dodane przez: ' + feature.properties.author + '</p>'
-                start_timeDiv.innerHTML = '<p>' + feature.properties.start_time + '</p>'
-                deadlineDiv.innerHTML = '<p>' + feature.properties.deadline + '</p>'
-                type_of_eventDiv.innerHTML = '<p>' + feature.properties.type_of_event + '</p>'
+                // authorDiv.innerHTML = '<p>Dodane przez: ' + feature.properties.author + '</p>'
+                start_timeDiv.innerHTML = '<p>' + feature.properties.start_time + ' - ' + feature.properties.deadline + '</p>'
+                // type_of_eventDiv.innerHTML = '<p>' + feature.properties.type_of_event + '</p>'
                 toggle_right_menu(1, 'detail', feature.properties.x_miejsca, feature.properties.y_miejsca)
             }, false);
-                
+
             new mapboxgl.Marker(el).setLngLat(nowe_markery.features[0].geometry.coordinates).addTo(map);
         }
     };
@@ -363,7 +314,7 @@
         "{% endfor %}"
         dodaj_marker(y.replace(",","."), x.replace(",","."), title, description, author, start_time, deadline, type_of_event, main_image, images);
     "{% endfor %}"
-    
+
 // pisze ten koda w połowie śpiąc ale działa on tak że jesli na mapie poza markerem no to zamyka prawy sidebar
     const markery_na_mapie = document.getElementsByClassName("marker");
     const markery_w_liscie = document.getElementsByClassName("left-list-element")
@@ -376,12 +327,12 @@
             if (markery_na_mapie[i].contains(e.target)){
                 worked += 1
             }
-        }  
+        }
         for (var i = 0; i < markery_w_liscie.length; i++) {
             if (markery_w_liscie[i].contains(e.target)){
                 worked += 1
             }
-        }  
+        }
         if (sidenav_right_detail.contains(e.target) || sidenav_right_form.contains(e.target)){
             worked += 1
         }
@@ -394,74 +345,18 @@
             // toggle_right_menu(0, 'form')
             toggle_right_menu(0, 'detail')
         }
-        worked = 0 
+        worked = 0
     });
 
+    // naprawia resize mapy
 
-    // function dodaj_input() {
+    function outputsize() {
+        map.resize()
+    }
+    outputsize()
 
-    //   // usuń ewentualne poprzednie formularze
-    //   function deleteElement(elementId){
-    //     var element = document.getElementById(elementId);
-    //     if (typeof(element) != 'undefined' && element != null)
-    //     {
-    //       element.remove();
-    //     }
-    //   }
+    new ResizeObserver(outputsize).observe(document.getElementById("map"))
 
-    //   deleteElement("button");
-    //   deleteElement("select");
-    //   deleteElement("input");
-
-    //   // tworzenie formularzy pod mapą
-    //   var form = document.getElementById('form');
-    //   var input = document.createElement("input");
-    //   input.id = 'input';
-    //   input.class = 'input';
-    //   input.type = 'text';
-    //   input.name = 'name';
-    //   form.appendChild(input);
-    
-    //   var select_kategoria = document.createElement("select");
-    //   select_kategoria.id = "select";
-    //   select_kategoria.class = "select";
-    //   var option1 = document.createElement("option");
-    //   option1.text = "kategoria1";
-    //   var option2 = document.createElement("option");
-    //   option2.text = "kategoria2";
-    //   var option3 = document.createElement("option");
-    //   option3.text = "kategoria3";
-    //   select_kategoria.add(option1);
-    //   select_kategoria.add(option2);
-    //   select_kategoria.add(option3);
-    //   form.appendChild(select_kategoria);
-
-    //   var button = document.createElement("button");
-    //   button.id="button";
-    //   button.class="button";
-    //   button.innerHTML = "button";
-    //   form.appendChild(button);
-
-    //   // funkcja która sprawdza czy przycisk pod submit został klikniety
-    //   button.addEventListener("click", function() {    
-    //     var text = input.value;
-    //     var kategoria = select_kategoria.value;
-        
-    //     // usuń formularz
-    //     deleteElement("button");
-    //     deleteElement("select");
-    //     deleteElement("input");
-
-    //     if(text.length > 0) dodaj_marker(x, y, text, kategoria);
-    //     else alert("brak nazwy");
-    //   });
-    // };
-
-    // // potencjalne problemy:
-    // // - przy większej ilości markerów mapa sie zacina (jesli obnizymy jakość i wielkość obrazków laguje mniej)
-
-
-    
 </script>
 
 <!-- ---------------------------------------------- -->

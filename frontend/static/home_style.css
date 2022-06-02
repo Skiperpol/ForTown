@@ -1,15 +1,15 @@
-/* 
+/*
 
-nie czytałem tego co tu jest wiec większosć klas jest pewnie 
+nie czytałem tego co tu jest wiec większosć klas jest pewnie
 do wyrzucenia
 
  */
-body {
+ body {
 	overflow-x: hidden !important;
 	overflow-y: hidden;
 }
 .ov{
-	overflow-y: auto !important; 
+	overflow-y: auto !important;
 }
 * {
     user-select: none !important;
@@ -19,7 +19,7 @@ body {
 /* .mapboxgl-ctrl-top-right {
 	display: none !important;
 } */
-#map { 
+#map {
 	width: auto;
 	height: 100vh;
 	transition: all .5s ease;
@@ -34,7 +34,9 @@ body {
 	height: 100px;
 	border-radius: 50%;
 	cursor: pointer;
+	pointer-events: none;
 }
+.marker::after
 .asteriskField {
 	color: red;
 }
@@ -52,7 +54,7 @@ body {
 	position: absolute;
 	bottom: 3vh;
 	width: 26vw;
-	height: 25vh;    
+	height: 25vh;
 	margin: 0 -3vw;
 }
 .images_box img {
@@ -60,11 +62,12 @@ body {
 	width: 48% !important;
 	height: 48% !important;
 	float: right;
-	
+
 }
 #img_1 {
 	border-radius: 10px 10px 0 0;
-	width: calc(26vw - 6px) !important;
+	width: 25vw !important;
+	margin-right: .5vw !important;
 }
 .Sportowe::before {
 	display: inline-block;
@@ -87,6 +90,7 @@ body {
 	background-image: url("https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png");
 }
 .kategoria1::after {
+    pointer-events: all;
 	filter: drop-shadow(1px 1px 1px #222);
 	position: absolute;
 	top: 0;
@@ -100,6 +104,7 @@ body {
 }
 
 .kategoria2::after {
+    pointer-events: all;
 	filter: drop-shadow(1px 1px 1px #222);
 	position: absolute;
 	top: 0;
@@ -113,6 +118,7 @@ body {
 }
 
 .kategoria3::after {
+    pointer-events: all;
 	filter: drop-shadow(1px 1px 1px #222);
 	position: absolute;
 	top: 0;

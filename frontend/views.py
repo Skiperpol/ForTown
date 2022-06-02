@@ -44,7 +44,7 @@ def home_page(request):
     sportowe_form = SportoweForm(request.POST)
     rozrywkowe_form = RozrywkoweForm(request.POST)
     nadchodzace_form = NadchodzaceForm(request.POST)
- 
+
     sortowane_eventy = event
     if request.method == "POST":
         if trwajace_form.is_valid():
@@ -86,7 +86,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
-            return redirect(frontend)
+            return redirect(home_page)
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render (request=request, template_name="registration/register.html", context={"register_form":form})

@@ -12,9 +12,10 @@
         align-items: center;
     }
     #sidenav_left .title_img {
-        width: 50%;
+        width: 45%;
         object-fit: contain;
         margin: 0;
+        margin-left: 4%;
     }
     #sidenav_title {
         width: 40%;
@@ -31,30 +32,60 @@
     .sidenav_right {
         top: 100vh;
         right: 0;
-        min-height: 100vh;
+        min-height: 80vh;
         height: 200vh;
     }
+    .disable {
+        display: none !important;
+    }
+    #add_form #buttons_form {
+        position: static;
+        width: auto !important;
+    	flex-direction: none !important;
+    	display: block !important;
+    	 /*height: 100%;*/
+    	padding-bottom: 20px;
+    }
     .mobilenone {
-        top: -30vh;
+        top: -30vh !important;
     }
     .active {
-        top: 20vh !important;
+	    position: absolute !important;
+        top: 40vh !important;
         right: 0;
     }
     .sidenav {
         width: 100vw;
     }
     .map_active {
-        height: 30vh !important; 
+        /*height: 30vh !important;*/
     }
     .data_telefon {
         display: inline-block;
         width: 43%;
     }
+    #sidenav_right_detail {
+        height: auto !important;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px !important;
+    }
+    .images_box {
+	    height: auto;
+        margin: auto !important;
+        position: static !important;
+        margin-top: 5vh !important;
+        margin-bottom: -2vh !important;
+        width: 100%;
+    }
+    #img_1 {
+        width: 98.5% !important;
+    }
+
     .sidenav_right #detail_main_img {
         margin: auto;
+        margin-bottom: 1.5vh;
         display: block;
-        height: 20vh;
+        height: 23vh;
         width: 100%;
         object-fit: cover;
         border-radius: 5px;
@@ -63,30 +94,70 @@
         display: inline-block;
         width: 90%;
     }
+    #mobiletitle h5 {
+        margin-bottom: 1vh;
+    }
     #mobiletrwa h5{
         margin-bottom: 0;
         color: red;
-        font-size: 0.7em;
     }
     #mobiletrwa {
+        margin-top: 2vh;
         display: block;
+    }
+    #mobiletrwa h5 {
+        font-size: .8em;
     }
     #titleDiv {
         display: none;
     }
-    #start_timeDiv {
+    #type_of_eventDiv {
         display: none;
     }
-    #deadlineDiv {
+    #authorDiv {
+        padding: 0 2vw 0 2vw;
+    }
+    #pctrwa {
         display: none;
+    }
+    #descriptionDiv {
+        padding: 0 2vw 0 2vw;
+    }
+    #start_timeDiv {
+        padding: 0 2vw 0 2vw;
+    }
+    #start_timeDiv p{
+        margin-bottom: .5vh;
+    }
+    #start_timeDiv {
+        text-align: left;
+        font-size: .9em;
     }
     #mobileend {
         float: right;
     }
+    #mobilegray {
+        position: absolute;
+        top: 1.2vh;
+        left: 50%;
+        content: "";
+        width: 7vw;
+        height: .8vh;
+        transform: translate(-50%, 0);
+        background-color: #cccccc;
+        border-radius: 25px;
+    }
+    #sidenav_right_form {
+        height: auto !important;
+        padding: 0 5vw;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px !important;
+    }
     #mobilesign {
         display: block;
         float: right;
-        width: 8%;
+        width: 9%;
+        margin-top: -2vh;
     }
     #mobilesign img {
         width: 100%;
@@ -95,6 +166,7 @@
     }
     #sidenav_right_form h3 {
         margin-bottom: 1vw;
+        margin-top: 5vh;
     }
     textarea {
         height: 4em;

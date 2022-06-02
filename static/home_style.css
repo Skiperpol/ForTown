@@ -1,15 +1,13 @@
-/* 
-
-nie czytałem tego co tu jest wiec większosć klas jest pewnie 
-do wyrzucenia
+/*
+TEN CSS DZIAŁA
 
  */
-body {
+ body {
 	overflow-x: hidden !important;
 	overflow-y: hidden;
 }
 .ov{
-	overflow-y: auto !important; 
+	overflow-y: auto !important;
 }
 * {
     user-select: none !important;
@@ -19,7 +17,7 @@ body {
 /* .mapboxgl-ctrl-top-right {
 	display: none !important;
 } */
-#map { 
+#map {
 	width: auto;
 	height: 100vh;
 	transition: all .5s ease;
@@ -30,6 +28,7 @@ body {
 	width: 100% !important;
 } */
 .marker {
+    pointer-events: none;
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
@@ -48,20 +47,29 @@ body {
 	background-repeat: no-repeat;
 	background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
 }
+
+#pctrwa h5{
+    font-size: .9em;
+    margin-bottom: 0;
+    color: red;
+}
+
 .images_box {
-	width: 20vw;
-	height: 30vh;
+	position: absolute;
+	bottom: .2%;
+	width: 24vw;
+	height: 25vh;
+	margin: 1vw -1vw;
 }
 .images_box img {
-	margin: 3px !important;
-	width: 48% !important;
+	margin: .5% !important;
+	width: 49% !important;
 	height: 48% !important;
 	float: right;
-	
+
 }
 #img_1 {
-	border-radius: 10px 10px 0 0;
-	width: 20vw !important;
+	width: calc(24vw - 1%) !important;
 }
 .Sportowe::before {
 	display: inline-block;
@@ -84,6 +92,7 @@ body {
 	background-image: url("https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png");
 }
 .kategoria1::after {
+    pointer-events: all;
 	filter: drop-shadow(1px 1px 1px #222);
 	position: absolute;
 	top: 0;
@@ -97,6 +106,7 @@ body {
 }
 
 .kategoria2::after {
+    pointer-events: all;
 	filter: drop-shadow(1px 1px 1px #222);
 	position: absolute;
 	top: 0;
@@ -110,6 +120,7 @@ body {
 }
 
 .kategoria3::after {
+    pointer-events: all;
 	filter: drop-shadow(1px 1px 1px #222);
 	position: absolute;
 	top: 0;
@@ -169,11 +180,11 @@ body {
 
 .sidenav {
     background-color: #fff;
-    width: 26vw;
+    width: 24vw;
     z-index: 2;
     position: fixed;
     top: 0;
-    padding: 3vh 3vw 3vh 3vw;
+    padding: 3vh 2vw 3vh 2vw;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -198,6 +209,7 @@ body {
 .sidenav_right {
     min-height: 100vh;
     right: -30vw;
+    width: 26vw;
 	transition: all .5s ease;
 }
 
@@ -216,7 +228,7 @@ body {
 	height: auto;
 	max-height: 35vh;
 	object-fit: cover;
-    margin: -3vh -3vw 2vh -3vw;
+    margin: -3vh -2vw 2vh -2vw;
 }
 
 .sidenav_right h3 {
@@ -254,8 +266,10 @@ body {
 }
 
 #add_form #buttons_form {
+    position: absolute;
+    bottom: 2vh;
+    width: 22vw;
 	flex-direction: row;
-	align-items: flex-end;
 	display: flex;
 	/* height: 100%;
 	padding-bottom: 20px; */
@@ -293,6 +307,9 @@ body {
 	margin-bottom: 1vh;
 }
 
+textarea {
+	height: 4em;
+}
 .break {
 	flex-basis: 100%;
 	height: 0;
@@ -313,3 +330,76 @@ body {
 	width: 50%;
 }
 
+@media (-webkit-device-pixel-ratio: 1.25) {
+	.sidenav_right img {
+		max-height: 25vh;
+	}
+	h3 {
+		font-size: 20.8px;
+	}
+	p {
+		font-size: 13px !important;
+	}
+
+	h2 {
+		font-size: 24px;
+	}
+	input, select {
+		font-size: 13px !important;
+		height: 2em;
+	}
+	button, a{
+		font-size: 13px !important;
+	}
+	label, span {
+		font-size: 13px !important;
+	}
+	textarea {
+		height: 3em;
+		font-size: 13px !important;
+	}
+	#add_form button {
+		font-size: 12px !important;
+		padding-right: 3px;
+		padding-left: 3px;
+	}
+	.kategoria1::after {
+		filter: drop-shadow(1px 1px 1px #222);
+		position: absolute;
+		top: 0;
+		left: 20px;
+		content: "";
+		width: 40px;
+		height: 40px;
+		background-size: 40px 40px;
+		/* background-image: url('mapbox-icon.png'); */
+		background-image: url("https://i.ibb.co/59GqRvs/obraz-2022-04-11-100010968.png");
+	}
+
+	.kategoria2::after {
+		filter: drop-shadow(1px 1px 1px #222);
+		position: absolute;
+		top: 0;
+		left: 20px;
+		content: "";
+		width: 40px;
+		height: 40px;
+		background-size: 40px 40px;
+		/* background-image: url('mapbox-icon.png'); */
+		background-image: url("https://i.ibb.co/VmXYvcc/obraz-2022-04-11-100240859.png");
+	}
+
+	.kategoria3::after {
+		filter: drop-shadow(1px 1px 1px #222);
+		position: absolute;
+		top: 0;
+		left: 20px;
+		content: "";
+		width: 40px;
+		height: 40px;
+		background-size: 40px 40px;
+		/* background-image: url('mapbox-icon.png'); */
+		background-image: url("https://i.ibb.co/Cb3TP27/obraz-2022-04-11-100333453.png");
+		/* background-image: url('mapbox-icon.png'); */
+	}
+  }
