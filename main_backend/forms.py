@@ -12,6 +12,30 @@ class TimePickerInput(forms.TimeInput):
     input_type = 'time'
     label = "s"
 
+
+def file_size(value):
+    limit = 2 * 1024 * 1024  # 2 MB
+    if value.size > limit:
+        raise ValidationError('Plik jest za duży. Maksymalny rozmiar to 2 MB.')
+
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+class MultipleFileField(forms.FileField):
+    widget = MultipleFileInput(attrs={'multiple': True})
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.validators.append(file_size)
+
+    def clean(self, data, initial=None):
+        files = data
+        for file in files:
+            self.validate(file)
+            self.run_validators(file)
+        return data
+
+
 # Tam gdzie masz task_window możesz dopisać sobie jak ma się nazywać klasa do danego okienka
 class CreateNewEvent(forms.Form):
     title = forms.CharField(label='Nazwa wydarzenia', max_length=100, widget=forms.TextInput(attrs={'class':'task_window', 'placeholder':'Zawody sportowe'}))
@@ -28,7 +52,7 @@ class CreateNewEvent(forms.Form):
     link_do_miejsca_wydarzenia = forms.URLField(required=False, label='Link', max_length = 200, widget=forms.URLInput(attrs={'class':'task_window'}))
     x = forms.FloatField(label='Naciśnij na mapę aby wybrać współrzędne geograficzne', required=True, widget=forms.NumberInput(attrs={'id': 'x', 'step': "0.0000000001"}))
     y = forms.FloatField(label='', required=True, widget=forms.NumberInput(attrs={'id': 'y', 'step': "0.0000000001"}))
-    image = forms.FileField(label='Zdjęcia dodatkowe', required=False, validators=[file_size], widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    image = MultipleFileField(label='Zdjęcia dodatkowe', required=False)
 
 class TrwajaceForm(forms.Form):
     title =  forms.CharField(label='', max_length=100, widget=forms.TextInput(attrs={'class':'none', 'value':'trwa'}))

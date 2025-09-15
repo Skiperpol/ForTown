@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'frontend.apps.FrontendConfig',
     'main_backend.apps.MainBackendConfig',
     'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,69 @@
+# --- Python / build ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.build/
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# --- Virtualenv / Poetry / Pipenv ---
+.env
+.venv/
+venv/
+ENV/
+pip-wheel-metadata/
+poetry.lock
+poetry.toml
+Pipfile.lock
+
+# --- Django ---
+# Pliki konfig./sekrety (jeśli trzymasz lokalnie)
+*.sqlite3
+db.sqlite3
+*.sqlite3-journal
+
+# Pliki generowane przez collectstatic
+staticfiles/
+staticfiles/*
+
+# Jeśli generujesz lokalne media (nie commitujemy uploadów)
+media/
+media/*
+
+# Pliki konfiguracyjne lokalne
+*.log
+*.pot
+local_settings.py
+.env.*
+.envrc
+
+# Celery / RQ / APScheduler itp.
+celerybeat-schedule
+celerybeat.pid
+
+# --- Testy / narzędzia jakości ---
+.pytest_cache/
+.coverage
+.coverage.*
+.cache/
+htmlcov/
+coverage.xml
+nosetests.xml
+pytestdebug.log
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+ruff_cache/
+.pyright/
+
+# --- IDE / Edytory ---
+.vscode/
+.history/
+.idea/
+*.iml
+
+*.sqlite3

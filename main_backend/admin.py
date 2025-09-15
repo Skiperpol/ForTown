@@ -23,10 +23,10 @@ class EventAdmin(admin.ModelAdmin):
     # wywołuje sie przy zapisie w panel adminie
     def save_model(self, request, obj, form, change):
         if obj.status == "Odrzucone":
-            sendEmail(obj.author.email, "Odrzucono wydarzenie", f"Wydarzenie {obj} zostalo odrzucone")
+            # sendEmail(obj.author.email, "Odrzucono wydarzenie", f"Wydarzenie {obj} zostalo odrzucone")
             Event.objects.filter(id=obj.id).delete()
         elif obj.status == "Zaakceptowane":
-            sendEmail(obj.author.email, "Zaakceptowano wydarzenie", f"Wydarzenie {obj} zostalo zaakceptowane")
+            # sendEmail(obj.author.email, "Zaakceptowano wydarzenie", f"Wydarzenie {obj} zostalo zaakceptowane")
             obj.status = "Zaakceptowane"
             obj.save()
         elif obj.status == "Oczekuje":
